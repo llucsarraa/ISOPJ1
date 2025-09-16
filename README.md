@@ -1,4 +1,4 @@
-# Projecte 1
+# Curs Implantació de sistemes operatius
 
 ## Contenido
 
