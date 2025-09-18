@@ -12,7 +12,7 @@
 
 Este repositorio está preparado para ser publicado con GitHub Pages.  
 Puedes ver la versión web pública en:  
-https://mireiaconsarnau.github.io/machine_learning/
+[https://mireiaconsarnau.github.io/machine_learning/](https://llucsarraa.github.io/ISOPJ1/)
 
 ## Licencia
 
