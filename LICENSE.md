@@ -1,30 +1,30 @@
-# Licencia Creative Commons Reconocimiento - No Comercial - Compartir Igual 3.0 España (CC BY-NC-SA 3.0)
+# Llicència Creative Commons Reconeixement - No Comercial - Compartir Igual 3.0 Espanya (CC BY-NC-SA 3.0)
 
-Este trabajo está licenciado bajo la [Licencia Creative Commons Reconocimiento - No Comercial - Compartir Igual 3.0 España (CC BY-NC-SA 3.0)](https://creativecommons.org/licenses/by-nc-sa/3.0/es/).
-
----
-
-## Resumen
-
-Esta licencia permite que otros compartan, copien y distribuyan tu trabajo, así como adaptarlo o transformarlo, siempre que:  
-
-- Reconozcan la autoría original.  
-- No utilicen el trabajo con fines comerciales.  
-- Distribuyan las obras derivadas bajo la misma licencia.  
+Aquest treball està llicenciat sota la [Llicència Creative Commons Reconeixement - No Comercial - Compartir Igual 3.0 Espanya (CC BY-NC-SA 3.0)](https://creativecommons.org/licenses/by-nc-sa/3.0/es/).
 
 ---
 
-## Texto legal completo
+## Resum
 
-Puedes consultar el texto completo de la licencia aquí:  
+Aquesta llicència permet que altres comparteixin, copiïn i distribueixin la teva obra, així com adaptar-la o transformar-la, sempre que:  
+
+- Es reconegui l’autoria original.  
+- No s’utilitzi l’obra amb finalitats comercials.  
+- Les obres derivades es distribueixin sota la mateixa llicència.  
+
+---
+
+## Text legal complet
+
+Pots consultar el text complet de la llicència aquí:  
 https://creativecommons.org/licenses/by-nc-sa/3.0/es/legalcode
 
 ---
 
-## Atribución y condiciones
+## Atribució i condicions
 
-Se debe dar crédito adecuado, proporcionar un enlace a esta licencia e indicar si se han realizado cambios. Cualquier obra derivada debe distribuirse con la misma licencia y no se pueden imponer restricciones adicionales.
+S’ha de donar el crèdit adequat, proporcionar un enllaç a aquesta llicència i indicar si s’han realitzat canvis. Qualsevol obra derivada s’ha de distribuir amb la mateixa llicència i no es poden imposar restriccions addicionals.
 
 ---
 
-© 2025 Mireia Consarnau
+© 2025 Lluc Sarra
