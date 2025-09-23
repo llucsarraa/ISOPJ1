@@ -6,11 +6,12 @@ title: SP1. Instal·lació, Configuració Inicial i Programari de Base
 ## Virtualitzacio i instal·lació del SO Ubuntu
 # Instal·lació d’una màquina virtual amb Ubuntu
 
-Per començar la instal·lació vaig crear una nova màquina virtual a VirtualBox. Li vaig posar el nom **UbuntuSP1**, vaig seleccionar el sistema operatiu **Ubuntu (64-bit)** i vaig carregar la imatge ISO corresponent (`ubuntu-22.04.3-desktop-amd64.iso`).  
-![Inici dels noms de la MV](inici%20dels%20noms%20de%20la%20MV.png)
+Per començar la instal·lació vaig obrir l'aplicació VirtualBox per a crear una nova màquina virtual. Li vaig posar el nom **UbuntuSP1**, vaig seleccionar el sistema operatiu **Ubuntu (64-bit)** i vaig carregar la imatge ISO corresponent (`ubuntu-22.04.3-desktop-amd64.iso`).  
+
+<img width="1920" height="1080" alt="inici dels noms de la MV" src="https://github.com/user-attachments/assets/ba101a60-3b4a-4564-89a7-2e2f7acccc14" />
 
 Un cop definits aquests paràmetres inicials, vaig passar a assignar els recursos de la màquina. Li vaig donar **4096 MB de memòria RAM** i **3 processadors**, suficient per poder treballar de manera fluida.  
-![Configuració abans d'arrancar la MV](configuracio%20abans%20d'arrancar%20la%20MV.png)
+<img width="1920" height="1080" alt="configuracio abans d'arrancar la MV" src="https://github.com/user-attachments/assets/3074f227-9cb7-4368-a07c-a35ce4828648" />
 
 Després vaig configurar el disc dur virtual. Vaig crear un disc de **80 GB** de tipus dinàmic, de manera que només ocupa l’espai real que utilitza el sistema.  
 ![Paràmetres finals de VirtualBox](Quan%20acabes%20dels%20parametres%20de%20VirtualBox%20%22finish%22.png)
