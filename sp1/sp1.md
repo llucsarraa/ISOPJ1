@@ -4,8 +4,37 @@ title: SP1. Instal·lació, Configuració Inicial i Programari de Base
 ---
 
 ## Virtualitzacio i instal·lació del SO Ubuntu
-<img width="1913" height="955" alt="MV amb les dades" src="https://github.com/user-attachments/assets/ecbb0eb6-975d-41cb-a03d-cfef5e4ec8b2" />
+# Instal·lació d’una màquina virtual amb Ubuntu
 
+Per començar la instal·lació vaig crear una nova màquina virtual a VirtualBox. Li vaig posar el nom **UbuntuSP1**, vaig seleccionar el sistema operatiu **Ubuntu (64-bit)** i vaig carregar la imatge ISO corresponent (`ubuntu-22.04.3-desktop-amd64.iso`).  
+![Inici dels noms de la MV](inici%20dels%20noms%20de%20la%20MV.png)
+
+Un cop definits aquests paràmetres inicials, vaig passar a assignar els recursos de la màquina. Li vaig donar **4096 MB de memòria RAM** i **3 processadors**, suficient per poder treballar de manera fluida.  
+![Configuració abans d'arrancar la MV](configuracio%20abans%20d'arrancar%20la%20MV.png)
+
+Després vaig configurar el disc dur virtual. Vaig crear un disc de **80 GB** de tipus dinàmic, de manera que només ocupa l’espai real que utilitza el sistema.  
+![Paràmetres finals de VirtualBox](Quan%20acabes%20dels%20parametres%20de%20VirtualBox%20%22finish%22.png)
+
+Amb la màquina configurada, vaig iniciar la instal·lació d’Ubuntu. Durant aquest procés es mostra un resum de les dades de la màquina virtual i, tot seguit, comença el particionament del disc.  
+![Dades de la MV](MV%20amb%20les%20dades.png)
+
+Per al particionament vaig decidir fer un **dual boot**, repartint els **80 GB totals en dues parts**: **40 GB per a Ubuntu** i **40 GB lliures** per a futurs usos o instal·lacions.  
+![Dual boot](dual%20boot%20que%20es%20lo%20de%20la%20reparticio.png)  
+![Repartició d'espais](Reparticio%20d'espais.png)
+
+Durant aquest pas va sorgir un avís: el sistema em demanava crear una petita partició d’uns **1 MB reservada per al BIOS boot area**. Aquesta partició és necessària perquè el carregador d’arrencada funcioni correctament. Vaig afegir-la per resoldre el problema.  
+![Problema Reserved BIOS boot area](Problema%20reserved%20BIOS%20boot%20area.png)
+
+Finalment, la taula de particions va quedar de la següent manera:  
+- `/` → 12 GB  
+- `/home` → 25 GB  
+- `/boot` → 1 GB  
+- `swap` → 2 GB  
+- `efi` → 399 MB  
+
+![Repartició final](Reparticio%20d'espais.png)
+
+Per acabar, vaig haver d’executar una comanda des del terminal relacionada amb els mòduls de VirtualBox, concretament:  
 
 ## Llicènciament
 ## Llicències a Ubuntu  
