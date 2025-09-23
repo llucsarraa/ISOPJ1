@@ -16,7 +16,8 @@ Ubuntu és una distribució de GNU/Linux basada en programari lliure i de codi o
 - **LGPL (Lesser GPL):** utilitzada en algunes llibreries, permet la seva integració amb programari propietari.  
 - **Llicències Permissives (MIT, Apache, BSD):** presents en certs components, permeten més flexibilitat en la redistribució del codi.  
 
-Ubuntu combina diferents llicències lliures, però sempre assegurant l’accés al **codi font** i respectant la filosofia del programari lliure.  
+### Aspectes legals  
+El programari es troba protegit pels **drets d’autor (copyright)**. En el cas del programari lliure com Ubuntu, aquests drets es gestionen mitjançant llicències que asseguren tant la protecció dels creadors com les llibertats dels usuaris.  
 
 Més informació:  
 - [GNU Llicències](https://www.gnu.org/licenses/licenses.es.html)  
