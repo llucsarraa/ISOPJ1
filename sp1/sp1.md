@@ -55,6 +55,27 @@ Més informació:
 - [Llicències Ubuntu](https://ubuntu.com/licensing)  
 
 ## Gestors d'arrancada per a instal·lacions DUALS
+## Gestor de paquets
+dpkg
+instal·la
+obrir l'app
+desinstalar
+obrir l'error de que no hi ha app
+apt
+instal·la
+obrir l'app
+desinstalar
+obrir l'error de que no hi ha app
+aptitude
+instal·la
+obrir l'app
+desinstalar
+obrir l'error de que no hi ha app
+repositori
+instal·la
+obrir l'app
+desinstalar
+obrir l'error de que no hi ha app
 ## Punts de restrauració
 ## Configuració de la xarxa
 ## Comandes generals i instal·lacions
