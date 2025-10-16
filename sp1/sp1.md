@@ -38,7 +38,7 @@ Finalment, la taula de particions va quedar de la següent manera:
 Una vegada fetes les particions vaig instal·lar el sistema i va quedar llest per a utilitzar.
 
 
-## Llicènciament
+## Llicenciament
 ## Llicències a Ubuntu  
 
 Ubuntu és una distribució de GNU/Linux basada en programari lliure i de codi obert. El seu ús està regulat principalment per la **Llicència Pública General de GNU (GPL)** i altres llicències lliures compatibles.  
