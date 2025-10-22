@@ -1,6 +1,6 @@
-# Llicència Creative Commons Reconeixement - No Comercial - Compartir Igual 3.0 Espanya (CC BY-NC-SA 3.0)
+# Llicència Creative Commons Reconeixement - No Comercial - Compartir Igual 3.0 Espanya (CC BY-NC-SA 4.0)
 
-Aquest treball està llicenciat sota la [Llicència Creative Commons Reconeixement - No Comercial - Compartir Igual 3.0 Espanya (CC BY-NC-SA 3.0)](https://creativecommons.org/licenses/by-nc-sa/3.0/es/).
+Aquest treball està llicenciat sota la [Llicència Creative Commons Reconeixement - No Comercial - Compartir Igual 4.0 Espanya (CC BY-NC-SA 3.0)](https://creativecommons.org/licenses/by-nc-sa/3.0/es/).
 
 ---
 
