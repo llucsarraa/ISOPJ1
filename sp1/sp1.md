@@ -146,6 +146,25 @@ Posteriorment, es reinicia el sistema i s'accedeix a Ubuntu per realitzar la mat
 (imatge)
 
 # Punts de restrauració
+Explicació de què és:
+Un punt de restauració consisteix en una còpia de seguretat de l'estat i la configuració del sistema operatiu en un moment específic. La seva finalitat principal és permetre la reversió de canvis per solucionar incidències. Per exemple, si la instal·lació posterior d'un programa, controlador o actualització causa un funcionament incorrecte de l'equip, es pot utilitzar aquest punt per retornar el sistema a l'estat previ a la instal·lació, resolent així el problema.
+
+### Instal·lació del TimeShift
+
+Per a la gestió de punts de restauració en sistemes Ubuntu, una de les eines més recomanades és TimeShift. Aquesta aplicació, que permet capturar i restaurar l'estat del sistema, requereix una instal·lació prèvia mitjançant el gestor de paquets APT.
+
+<img width="1291" height="618" alt="Captura de pantalla de 2025-10-07 12-51-09" src="https://github.com/user-attachments/assets/cf2d4e05-2aa0-4118-bd76-58623a0cb8e1" />
+
+### Configuració de la partició
+
+Un cop instal·lada l'aplicació, el pas següent consisteix a preparar el disc on s'emmagatzemaran les còpies de seguretat. Per a això, és necessari crear una nova partició al disc virtual afegit prèviament, ja que, tal com s'il·lustra a la imatge adjunta, aquest es troba actualment sense particions.
+
+<img width="1291" height="618" alt="Captura de pantalla de 2025-10-07 12-54-23" src="https://github.com/user-attachments/assets/da4c2e58-6a98-433c-9f48-fff47f95f133" />
+
+A continuació, s'inicia el procés per a la creació de la nova partició.
+
+<img width="1291" height="618" alt="Captura de pantalla de 2025-10-07 12-51-52" src="https://github.com/user-attachments/assets/da5f6e7b-e298-427f-bb75-54f4d4e6459e" />
+
 
 
 # Gestor de paquets
