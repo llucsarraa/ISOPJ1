@@ -57,67 +57,96 @@ Més informació:
 # Gestors d'arrancada per a instal·lacions DUALS
 ## Pas 1: Context - Instal·lació de Windows
 
+Per començar, és necessari accedir als ajustos de la nostra màquina virtual. Un cop dins, hem de dirigir-nos a la secció de "Sistema" i habilitar l'opció "Activa EFI (només SO especials)". Aquest pas és crucial, ja que ens donarà la possibilitat d'instal·lar Windows 10 a la mateixa unitat de disc. Si ometem aquesta acció, el sistema no permetrà la instal·lació a causa de la incompatibilitat entre el sistema MBR de la BIOS que utilitza Windows i el sistema GPT UEFI d'Ubuntu.
+
+<img width="1071" height="584" alt="1" src="https://github.com/user-attachments/assets/b047363d-35ef-48e0-8b12-e81e18b00ed3" />
+
+Per carregar la imatge de Windows a la unitat de disc virtual, cal dirigir-se a l'apartat "Emmagatzematge" dins de la configuració. Allà, es visualitzarà una unitat òptica amb l'etiqueta "Buit". S'ha de seleccionar aquesta unitat i, posteriorment, prémer la icona del disc blau per obrir l'explorador d'arxius i seleccionar la imatge ISO del sistema operatiu.
+
+<img width="1310" height="547" alt="2" src="https://github.com/user-attachments/assets/f420b0b3-e3c6-468c-a5e4-252408aecfdc" />
+
+Un cop completats aquests passos, ja podem procedir a iniciar la màquina virtual per començar amb la instal·lació de Windows 10. Durant el procés, quan s'hagi d'escollir el tipus d'instal·lació, és necessari seleccionar l'opció "Personalitzada".
+
+<img width="1642" height="923" alt="instalació windows 2" src="https://github.com/user-attachments/assets/adca4ec5-fabe-418a-af33-6e34be2098c3" />
+
+A continuació, cal escollir la unitat de disc que figura com a disponible. Des d'aquí, es pot procedir a la creació d'una nova partició en aquest espai.
+
+<img width="1642" height="923" alt="instalacio windows 3" src="https://github.com/user-attachments/assets/d9258878-47b6-42d0-a3d1-81edbcdf4d66" />
+
+Un cop la màquina virtual es reiniciï automàticament, començarà la fase de configuració estàndard de Windows, on caldrà seguir les indicacions del sistema operatiu.
+
+<img width="1642" height="923" alt="Captura de pantalla de 2025-09-30 13-49-11" src="https://github.com/user-attachments/assets/74ea6395-6c9a-4e36-98b5-620ab9ce0069" />
+<img width="1642" height="923" alt="Captura de pantalla de 2025-09-30 13-54-34" src="https://github.com/user-attachments/assets/fbed92d4-49f8-4a47-b1b3-706ccbbee46c" />
+
+Un cop completats aquests passos finals, el sistema operatiu quedarà correctament instal·lat i a punt per al seu ús.
+
+<img width="1642" height="923" alt="Captura de pantalla de 2025-09-30 13-56-39" src="https://github.com/user-attachments/assets/0af992e5-13eb-4a7d-b1ea-37ad4770aa84" />
+
+## Pas 2: Identificació del Problema i Preparació de l'Eina de Rescat
+
 El problema es va originar en instal·lar Windows en una màquina on ja existia Ubuntu. El procés d'instal·lació de Windows sobreescriu el gestor d'arrencada principal (MBR o partició EFI), eliminant l'entrada al GRUB d'Ubuntu.
+Un cop finalitzada la instal·lació, Windows arrencava correctament, però l'opció per iniciar Ubuntu havia desaparegut. Per a solucionar el problema primer de tot és apagar la màquina virtual. A continuació, és necessari accedir novament a la configuració per retirar la imatge del disc d'instal·lació (ISO). Aquesta acció és indispensable per evitar que el sistema intenti arrencar des d'aquest mitjà en el proper inici.
 
-<img width="1642" height="923" alt="Captura de pantalla de 2025-09-30 13-54-34" src="https://github.com/user-attachments/assets/02677f58-bdd8-47f2-8df5-f067194c4974" />
+<img width="1159" height="551" alt="Captura de pantalla de 2025-10-22 19-13-26" src="https://github.com/user-attachments/assets/91138701-134c-4ead-bd17-a385c085f779" />
 
-Un cop finalitzada la instal·lació, Windows arrencava correctament, però l'opció per iniciar Ubuntu havia desaparegut.
+Després de retirar la imatge de Windows, el següent pas consisteix a muntar una nova imatge ISO a la unitat òptica virtual. En aquesta ocasió, s'ha de carregar un arxiu destinat a la recuperació del gestor d'arrencada GRUB, que en aquest cas concret és el fitxer "super_grub2_disk_hybrid_2.02s3.iso".
 
-<img width="1642" height="923" alt="Captura de pantalla de 2025-09-30 13-56-39" src="https://github.com/user-attachments/assets/78d5516c-ccc6-429d-8c95-760a40e67686" />
+<img width="601" height="35" alt="Captura de pantalla de 2025-10-07 11-35-21" src="https://github.com/user-attachments/assets/5c8ba713-acb9-48f4-bc16-4fe08529e7b7" />
 
-## Pas 2: Identificació del Problema
+<img width="1061" height="544" alt="Captura de pantalla de 2025-10-22 19-18-41" src="https://github.com/user-attachments/assets/fbe26afe-e965-46dc-a8f2-5030283c0132" />
 
-En intentar arrencar el sistema operatiu original (Ubuntu), el sistema es quedava bloquejat a la pantalla de càrrega, confirmant que el gestor d'arrencada estava corrupte o era inaccessible.
+## Pas 3: Arrencant des de l'Eina de Rescat
 
-<img width="1642" height="923" alt="Captura de pantalla de 2025-09-30 13-49-11" src="https://github.com/user-attachments/assets/0c2960cc-b3ec-4a89-92e1-5c754d974ddb" />
+Per tal d'iniciar el sistema des d'aquesta imatge ISO, cal arrencar la màquina virtual i, immediatament, prémer la tecla "ESC" per accedir al menú d'arrencada. Un cop dins d'aquest menú, s'ha de seleccionar l'opció "Boot Manager".
 
-## Pas 3: Preparació de l'Eina de Rescat
+<img width="1259" height="631" alt="f12 dins la maquina part 1" src="https://github.com/user-attachments/assets/49ac141a-057a-43fb-b940-f20173ca1fbd" />
 
-Per solucionar-ho, es va utilitzar l'eina **Super Grub2 Disk**, una imatge ISO d'arrencada dissenyada per detectar i arrencar sistemes operatius encara que el seu gestor d'arrencada estigui danyat.
+Per iniciar des del mitjà de recuperació, procedirem a escollir la unitat de CD-ROM, ja que és el dispositiu on hem muntat prèviament la imatge ISO.
 
-<img width="601" height="35" alt="Captura de pantalla de 2025-10-07 11-35-21" src="https://github.com/user-attachments/assets/d701f8ce-8ac9-4478-8f92-72293bad1c52" />
+<img width="1259" height="631" alt="f12 maquina virtual part 2" src="https://github.com/user-attachments/assets/29d28855-c424-456b-b3eb-2217fd0b47c2" />
 
-## Pas 4: Arrencant des de l'Eina de Rescat
+A continuació, es mostrarà el menú principal de la imatge ISO. Aquesta eina s'utilitzarà per accedir al sistema Ubuntu i reinstal·lar el gestor d'arrencada GRUB. Dins del menú, s'ha d'escollir l'opció "Detect and show boot methods".
 
-Es va muntar la imatge ISO a la màquina virtual i es va configurar per arrencar des d'aquesta unitat. Al menú d'arrencada UEFI de la màquina, es va seleccionar l'opció `UEFI VBOX CD-ROM`.
+<img width="816" height="298" alt="Captura de pantalla de 2025-10-07 11-37-39" src="https://github.com/user-attachments/assets/1bc8b127-85ef-499d-b323-0a820665f8e1" />
 
-<img width="816" height="298" alt="Captura de pantalla de 2025-10-07 11-37-29" src="https://github.com/user-attachments/assets/49a06049-6e93-43e1-9ef9-a11cb3777ca3" />
+A la pantalla a la qual accedim, el pas següent és identificar l'opció corresponent, tal com es mostra a la captura de pantalla adjunta.
 
-## Pas 5: Detecció i Arrencada del Sistema
+<img width="816" height="298" alt="Captura de pantalla de 2025-10-07 11-38-07" src="https://github.com/user-attachments/assets/0fcf9b4f-454c-4e5c-972f-bbedb494b440" />
 
-Un cop iniciat Super Grub2 Disk, es va seleccionar l'opció principal: **"Detect and show boot methods"**.
+Aquesta acció iniciarà el sistema operatiu Ubuntu. Un cop hagi carregat l'entorn d'escriptori, caldrà obrir una finestra de terminal i executar les següents ordres de manera seqüencial:
 
-<img width="816" height="298" alt="Captura de pantalla de 2025-10-07 11-37-39" src="https://github.com/user-attachments/assets/993cba34-e509-427f-b4f1-79e2a72365b2" />
+- sudo grub-install /dev/sda
+- sudo update-grub2
 
-L'eina va escanejar els discs i va trobar el fitxer de configuració de GRUB d'Ubuntu (`(hd0,gpt3)/grub/grub.cfg`). Seleccionar aquesta opció va permetre iniciar el sistema Ubuntu de forma temporal per poder-lo reparar.
+<img width="1090" height="596" alt="Captura de pantalla de 2025-10-07 11-40-28" src="https://github.com/user-attachments/assets/36de2cf9-d9f3-4d14-9358-da13ae96b302" />
 
-<img width="816" height="298" alt="Captura de pantalla de 2025-10-07 11-38-07" src="https://github.com/user-attachments/assets/4a2068b8-9bd3-4df5-990c-d6caf4ce0ec0" />
+És possible que la sortida de la darrera comanda mostri un avís referent a la variable GRUB_DISABLE_OS_PROBER. Si no es gestiona aquesta configuració, el gestor d'arrencada GRUB no detectarà altres sistemes operatius, impedint l'accés a Windows. Per corregir-ho, és necessari editar el seu fitxer de configuració. Primer, elevarem els privilegis a superusuari i, seguidament, executarem l'ordre per obrir l'arxiu:
 
-## Pas 6: Reinstal·lació del GRUB (Primer Intent)
+- sudo su
+- nano /etc/default/grub
 
-Ja dins d'Ubuntu, es va obrir un terminal i es van executar dues comandes clau:
-1. `sudo grub-install /dev/sda` - Per reinstal·lar el GRUB al disc principal.
-2. `sudo update-grub` - Per actualitzar la configuració i detectar els sistemes operatius.
+<img width="1090" height="596" alt="Captura de pantalla de 2025-10-07 11-42-23" src="https://github.com/user-attachments/assets/07677a11-0b71-433c-9a37-4fc72f79278d" />
 
-Aquest primer intent va mostrar un avís important: `Warning: os-prober will not be executed`. Això indica que GRUB no va buscar altres sistemes operatius (com Windows).
+Dins de l'editor, cal localitzar la línia GRUB_DISABLE_OS_PROBER=false. Si aquesta línia està "comentada" (precedida per un símbol '#'), s'ha d'eliminar aquest símbol. En cas que la línia no existeixi, s'ha d'afegir manualment. Un cop la directiva estigui activa, desarem els canvis (amb Ctrl+O) i tancarem l'editor (Ctrl+X). Finalment, per aplicar la nova configuració, executarem de nou la comanda update-grub.
 
-<img width="1090" height="596" alt="Captura de pantalla de 2025-10-07 11-40-28" src="https://github.com/user-attachments/assets/5aa1f95b-da1c-4e25-a445-8178782cb0b8" />
+<img width="1090" height="596" alt="Captura de pantalla de 2025-10-07 11-43-09" src="https://github.com/user-attachments/assets/11f65162-5aff-4724-90e4-588563653a81" />
 
-## Pas 7: Activació de 'os-prober'
+En reiniciar la màquina virtual, el gestor d'arrencada GRUB hauria de mostrar un menú amb les diferents opcions de sistema operatiu. Per verificar que el procés s'ha completat amb èxit, es recomana accedir a cadascun d'ells per comprovar la seva correcta funcionalitat.
 
-Per solucionar l'avís anterior, es va editar el fitxer de configuració `/etc/default/grub` amb l'editor `nano`.
+<img width="1090" height="596" alt="Captura de pantalla de 2025-10-07 11-43-49" src="https://github.com/user-attachments/assets/274f3964-32d2-4e4a-811f-b9d08ae884d1" />
 
-Es va localitzar la línia `GRUB_DISABLE_OS_PROBER` i es va assegurar que el seu valor fos `false`. Això activa la capacitat de GRUB per detectar altres sistemes operatius.
+## Pas 4: Verificació
 
-<img width="1090" height="596" alt="Captura de pantalla de 2025-10-07 11-42-23" src="https://github.com/user-attachments/assets/b6992d2f-08ef-445d-9cc2-aaf7225e4166" />
+S'accedeix al sistema operatiu Windows per verificar que s'inicia i funciona correctament després de la configuració del menú d'arrencada.
 
-## Pas 8: Actualització Final i Verificació
+(imatge)
 
-Després de guardar els canvis al fitxer, es va executar de nou la comanda `update-grub` (en aquest cas, com a usuari `root`).
+Posteriorment, es reinicia el sistema i s'accedeix a Ubuntu per realitzar la mateixa comprovació i verificar que també funciona correctament.
 
-La sortida va confirmar l'èxit del procés: la línia **"Found Windows Boot Manager"** va indicar que el GRUB s'havia generat correctament i ara incloïa una entrada per iniciar Windows, solucionant definitivament el problema.
+(imatge)
 
-<img width="1090" height="596" alt="Captura de pantalla de 2025-10-07 11-43-09" src="https://github.com/user-attachments/assets/f89f4a03-68fc-4a55-b382-eccdb74fc6c3" />
+# Punts de restrauració
+
 
 # Gestor de paquets
 dpkg
@@ -140,6 +169,5 @@ instal·la
 obrir l'app
 desinstalar
 obrir l'error de que no hi ha app
-# Punts de restrauració
 # Configuració de la xarxa
 # Comandes generals i instal·lacions
