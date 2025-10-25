@@ -343,4 +343,24 @@ Com a darrera verificació, procedim a iniciar el programa per assegurar-nos de 
 <img width="813" height="539" alt="image" src="https://github.com/user-attachments/assets/e4666b25-c3f7-4641-a313-7ace4f94a282" />
 
 # Configuració de la xarxa
-# Comandes generals i instal·lacions
+Inicialment, és necessari verificar l'adreça IP actual del sistema mitjançant l'execució de la comanda ip a. Un cop obtinguda aquesta informació, s'ha d'accedir al panell de configuració de la xarxa per establir de forma manual els paràmetres de l'adreça IP, la màscara de subxarxa i la porta d'enllaç (gateway).
+
+<img width="1221" height="464" alt="Captura de pantalla de 2025-10-07 13-44-44" src="https://github.com/user-attachments/assets/5ea80d2d-54c8-4ff2-b594-99d4ceee3d47" />
+
+Per verificar que la configuració de xarxa és correcta i tenim sortida a Internet, realitzarem una prova de connectivitat. Executarem una comanda ping a l'adreça 8.8.8.8 i, posteriorment, al domini google.es.
+
+<img width="1211" height="530" alt="Captura de pantalla de 2025-10-07 13-45-54" src="https://github.com/user-attachments/assets/fd4c3bcb-8415-48f5-8323-3271cdf382ca" />
+
+Ara, per fer aquesta configuració persistent, és necessari modificar el fitxer de configuració de netplan.
+
+Per editar aquest arxiu, executarem la següent ordre, prement la tecla TAB on s'indica per autocompletar el nom del fitxer .yaml, ja que aquest pot variar:
+
+nano /etc/netplan/ (prémer TAB)
+
+Un cop a l'editor, afegirem els paràmetres corresponents a la configuració manual (adreça IP, porta d'enllaç, etc.).
+
+<img width="1211" height="530" alt="Captura de pantalla de 2025-10-07 13-54-50" src="https://github.com/user-attachments/assets/e7999f1e-0184-4a03-a8fc-c76388345af4" />
+
+Per aplicar els canvis de configuració emmagatzemats, executarem la comanda netplan apply. Immediatament després, realitzarem una comprovació de connectivitat fent ping a 8.8.8.8 i a google.es per verificar que els canvis han estat exitosos.
+
+<img width="1211" height="530" alt="Captura de pantalla de 2025-10-07 13-55-12" src="https://github.com/user-attachments/assets/73155739-4aec-48da-85f1-9b5fd2af6b5a" />
