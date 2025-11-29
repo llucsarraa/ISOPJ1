@@ -7,126 +7,121 @@ title: "SPRINT 2: INSTAL·LACIÓ, CONFIGURACIÓ DE PROGRAMARI DE BASE I GESTIÓ 
 
 ## Mida sector
 
-El sector és la unitat mínima física del disc on es guarden les dades i per defecte són **512 bytes**. No es pot cambiar la mida.
+Pel que fa a l'emmagatzematge físic, la unitat elemental es coneix com a sector. Aquest espai, destinat a allotjar la informació, té una capacitat predeterminada de 512 bytes, la qual és inalterable.
 
 ## Mida block
 
-És la unitat mínima lògica on es guarden les dades al SO, per defecte són 4096 bytes. I es pot canviar la mida quan es formata el disc.
+A nivell del Sistema Operatiu, l'espai mínim lògic per emmagatzemar informació s'anomena bloc o clúster. Encara que la configuració estàndard sol ser de 4096 bytes, aquest valor és modificable durant el procés de formatació de la unitat.
 
-La mida del block o cluster i el sistema de fitxers pot ser diferent a cada partició del mateix disc.
+És important notar que en un mateix disc físic, cada partició és independent; per tant, cadascuna pot tenir el seu propi sistema de fitxers i una mida de clúster diferent.
 
-Exemple:
-
-* Amb aquest cas podem veure amb la primera comanda el que pesa el text "Bon dia" (8 bytes), i amb la segona comanda podem observar la mida en disc, aquest es l'espai mínim que el sistema de fitxers reserva per a un fitxer.
+Anàlisi de l'exemple: En el cas pràctic, comparem dues mètriques. La primera comanda ens retorna el pes literal del contingut ("Bon dia", que ocupa 8 bytes). En canvi, la segona comanda ens mostra l'ocupació real al disc, revelant l'espai mínim que el sistema ha reservat (un clúster sencer) per allotjar aquest fitxer tan petit.
 
 ![1](Imatges/1.png)
 
 ## Fragmentació interna
 
-És quan es desaprofita espai perque els blocs són massa grans per al que s'ha de guardar dins.
+Aquesta situació es dóna quan hi ha una discrepància entre la mida del fitxer i la del bloc. Si el bloc és excessivament gran per a la informació que conté, la part sobrant d'aquest bloc queda buida i no es pot aprofitar per a cap altra dada, resultant en una pèrdua d'emmagatzematge.
 
 ## Fragmentació externa
 
-És quan a mesura que vas treballant l'espai lliure total es va trencant en petits trossos separats.
+Amb el pas del temps i l'activitat diària, l'emmagatzematge lliure del disc perd la seva continuïtat. En lloc de tenir un únic bloc gran d'espai buit, aquest queda escampat en petits forats separats entre si, fent més difícil guardar fitxers grans de manera seguida.
 
 ## Tipus de formateig
 
-- Baix nivell
+- Format de Baix Nivell (Físic): Aquest procés és el més dràstic; elimina absolutament tota la informació magnètica i retorna el disc al seu estat original de fàbrica. No es tracta d'una funció estàndard del Sistema Operatiu, per la qual cosa requereix eines de software específiques (sovint del fabricant).
 
-Borra sistema de fitxers, borra formateig, etc. És a dir, que borra totes les dades i el deixa com a nou.
-Des del sistema operatiu no es pot formatar, es necessiten programes adients.
+- Format de Nivell Mitjà: A més de netejar el sistema de fitxers, realitza un escaneig superficial. Si troba sectors danyats, els etiqueta com a inutilitzables per evitar errors futurs, tot i que no té capacitat per reparar el dany físic.
 
-- Mig nivell
+- Format d'Alt Nivell (Lògic): És l'operació més ràpida i superficial. La seva funció es limita exclusivament a restablir l'estructura del sistema de fitxers, deixant l'espai llest per a ser sobreescrit sense comprovar l'estat físic del disc.
 
-Només borra sistema de fitxers pero si hi han sectors defectuosos els marca pero no els arregla.
+**D'una manera mes clara ho compararem amb una taula.**
 
-- Alt nivell
-
-El format d'alt nivell només borra el sistema de fitxers.
+| Nivell de Formatat | Acció Principal | Detalls i Requisits |
+| :--- | :--- | :--- |
+| **Baix Nivell** | Esborrat físic complet (restauració de fàbrica). | No es pot realitzar des del Sistema Operatiu estàndard; requereix programari específic de tercers o del fabricant. |
+| **Nivell Mitjà** | Eliminació del sistema de fitxers. | Realitza un escaneig per detectar sectors defectuosos i els marca com a "no utilitzables", tot i que no corregeix el dany físic. |
+| **Alt Nivell** | Neteja ràpida (lògica) de l'índex d'arxius. | És el formatat més superficial; només restableix l'estructura de fitxers sense comprovar l'estat del disc. |
 
 ## Gestió de particions
 
-Es una agrupacio logica de particions i/o discos, es posar una capa d'abstració damunt de les particions.
+Aquest sistema implementa una virtualització de l'emmagatzematge. La seva funció principal és crear un nivell intermedi entre el maquinari físic i el sistema operatiu, permetent fusionar diversos dispositius (ja siguin discos sencers o particions individuals) en una única entitat gestionable de manera conjunta.
 
 ### Comandes
 
-* Amb la comanda `fdisk -l` podem veure l'espai.
+Per consultar la capacitat total i l'estructura de les unitats connectades, executarem la instrucció fdisk amb el paràmetre de llista (-l).
 
 ![2](image.png)
 
-* Amb aquesta comanda podem mirar la mida del bloc de la partició, i filtrem amb grep per la paraula "Block".
+Per aïllar la informació relativa a la mida del bloc, canalitzem la sortida cap a grep, indicant-li que mostri només les línies que coincideixin amb el terme "Block".
 
 ![3](image-1.png)
 
-* Per a la fragmentació externa podem fer-ho amb la comanda "e4defrag", aquí ens en indica si fa falta fragmentar alguna partició.
+Per diagnosticar la fragmentació externa, fem ús de l'eina e4defrag. Aquesta ens generarà un informe indicant si la partició té un nivell de dispersió que requereixi ser desfragmentat.
 
 ![4](Imatges/4.png)
 
-* En cas de voler-ho fragmentar podem executar la comanda pero sense el parametre "-c".
+Si volem aplicar la desfragmentació (en lloc de només simular-la o comprovar-la), haurem d'executar la instrucció ometent el paràmetre -c.
 
 ![5](Imatges/5.png)
 
 ### GPARTED
 
-* Primerament, diem que gparted es el editor de particions de GNOME per a crear, reorganitzar i eliminar particions de disc. 
-
-* Permet triar el sistema de fitxers (FAT32, EXT4, NTFS…) pero no es pot modificar la mida del block.
+GParted és l'eina gràfica per excel·lència de l'entorn GNOME destinada a la gestió integral de discos, permetent operacions com generar, moure o suprimir particions. Tot i que ofereix una gran flexibilitat per formatar en diversos sistemes de fitxers (com ara NTFS, EXT4 o FAT32), té una limitació important: no permet personalitzar la mida del bloc (cluster size), ja que aquest paràmetre s'assigna automàticament.
 
 #### Via interficie gràfica (GPARTED)
 
-Els passos a seguir son primerament executem l'eina i seleccionem el disc dalt a la dreta.
+El primer pas requereix iniciar el programa. Un cop dins, cal localitzar el selector d'unitats situat a la part superior dreta de la finestra i assegurar-nos que tenim marcat el disc correcte abans de fer cap operació.
 
 ![alt text](Imatges/20.png)
 
-* Ara anirem a "Dispositivo" i "Crear tabla de particiones".
+A continuació, ens dirigim a la barra de menús superior. Cliquem sobre la pestanya "Dispositivo" i, dins del desplegable, seleccionem l'opció "Crear tabla de particiones".
 
 ![alt text](Imatges/21.png)
 
-* Aquí ens sortira una alerta i hem de canviar el tipo de tabla de particiones i posar-ho amb "gpt".
+El sistema mostrarà una finestra d'advertència (ja que s'esborraran les dades). Dins d'aquest quadre de diàleg, hem de desplegar la llista de tipus de taula i seleccionar específicament l'opció gpt abans de continuar.
 
 ![alt text](Imatges/22.png)
 
-* Un cop ja ho tenim podem fer clic dret sobre la particio per a crear una nova partició.
+Amb la taula ja definida, visualitzarem l'espai com a "no assignat". Fem clic amb el botó dret sobre aquesta àrea i seleccionem l'opció per generar una nova partició.
 
 ![alt text](Imatges/23.png)
 
-* Aquí hem de posar-ho amb NTFS i podem canviar la mida de la partició.
+En aquesta finestra de configuració, hem d'establir el sistema de fitxers com a NTFS. A més, tenim l'oportunitat de definir manualment la capacitat (mida) que volem assignar a aquest nou volum.
 
 ![alt text](Imatges/24.png)
 
-* Per finalitzar hem de aplicar els canvis, per fer-ho cliquem al tick verd i acceptem la confirmació que ens surt.
+Com a pas últim, cal fer efectives totes les operacions pendents. Per fer-ho, premem la icona de validació (el vist o "tick" verd) de la barra d'eines i confirmem l'execució a la finestra emergent que apareix.
 
 ![alt text](Imatges/25.png)
 
 #### Via CLI (Command Line Interface)
 
-Per realitzar-ho ho farem amb la comanda **fdisk**.
-
-Anteriorment com que ja indentificat quina es la meva partició, un cop ja ho sabem executem la comanda i seguim els passos que s'observen a la captura de pantalla.
+Per dur a terme aquesta tasca utilitzarem la utilitat **fdisk**. Assumint que en el pas anterior ja hem localitzat el dispositiu objectiu, executem la comanda i reproduïm la seqüència d'accions que s'il·lustra a la imatge adjunta.
 
 ![alt text](Imatges/7.png)
 
-* Ara creem la partció.
+Seguidament, donem l'ordre per afegir una nova partició al disc.
 
 ![alt text](Imatges/8.png)
 
-* Aqui podem observar que esta creat correctament.
+**Verificació**: En aquest punt, confirmem que el procés de generació s'ha completat amb èxit.
 
 ![alt text](Imatges/9.png)
 
-* Ara amb la comanda "mkfs.ext4" podem canviar la mida del bloc amb aquest cas ho posaré amb **2048**.
+Seguidament, utilitzarem l'ordre **mkfs.ext4** per donar format a la partició. Aprofitarem per establir manualment una mida de bloc personalitzada de 2048 bytes.
 
 ![alt text](Imatges/10.png)
 
-* I podem comprovar-ho amb aquesta comanda.
+Per corroborar que la configuració s'ha aplicat correctament, executem la següent instrucció.
 
 ![alt text](Imatges/11.png)
 
-* I a l'altra partició com a **NTFS** per a que Windows ho reconeixi.
+Pel que fa a la segona partició, li assignarem el format **NTFS**. Aquest pas és essencial per garantir la plena compatibilitat amb sistemes Windows.
 
 ![alt text](Imatges/12.png)
 
-* Finalment podem entrar al **GPARTED** i comprovar-ho.
+Com a conclusió, executarem la utilitat gràfica GParted per realitzar una validació visual de l'estat final de les particions.
 
 ![alt text](Imatges/13.png)
 
