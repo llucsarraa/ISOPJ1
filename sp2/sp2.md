@@ -17,7 +17,7 @@ A nivell del Sistema Operatiu, l'espai mínim lògic per emmagatzemar informaci�
 
 Anàlisi de l'exemple: En el cas pràctic, comparem dues mètriques. La primera comanda ens retorna el pes literal del contingut ("Bon dia", que ocupa 8 bytes). En canvi, la segona comanda ens mostra l'ocupació real al disc, revelant l'espai mínim que el sistema ha reservat (un clúster sencer) per allotjar aquest fitxer tan petit.
 
-![1](Imatges/1.png)
+<img width="1098" height="330" alt="Captura de pantalla de 2025-11-30 00-58-43" src="https://github.com/user-attachments/assets/50c943aa-2763-425e-8412-8a43bc05a566" />
 
 ## Fragmentació interna
 
@@ -51,19 +51,19 @@ Aquest sistema implementa una virtualització de l'emmagatzematge. La seva funci
 
 Per consultar la capacitat total i l'estructura de les unitats connectades, executarem la instrucció fdisk amb el paràmetre de llista (-l).
 
-![2](image.png)
+<img width="1195" height="534" alt="Captura de pantalla de 2025-11-30 01-00-06" src="https://github.com/user-attachments/assets/5acb829f-6f8d-42c7-aac2-bd08f9afbbe8" />
 
 Per aïllar la informació relativa a la mida del bloc, canalitzem la sortida cap a grep, indicant-li que mostri només les línies que coincideixin amb el terme "Block".
 
-![3](image-1.png)
+<img width="1194" height="249" alt="Captura de pantalla de 2025-11-30 01-01-21" src="https://github.com/user-attachments/assets/3b8ded91-c23e-4898-b236-e731f919e2a7" />
 
 Per diagnosticar la fragmentació externa, fem ús de l'eina e4defrag. Aquesta ens generarà un informe indicant si la partició té un nivell de dispersió que requereixi ser desfragmentat.
 
-![4](Imatges/4.png)
+<img width="810" height="366" alt="Captura de pantalla de 2025-11-30 01-08-25" src="https://github.com/user-attachments/assets/b64b7a4b-1348-420a-b638-7226e6a498e1" />
 
 Si volem aplicar la desfragmentació (en lloc de només simular-la o comprovar-la), haurem d'executar la instrucció ometent el paràmetre -c.
 
-![5](Imatges/5.png)
+<img width="1043" height="205" alt="Captura de pantalla de 2025-11-30 01-09-52" src="https://github.com/user-attachments/assets/47af31b6-ab40-46f5-ad8d-6e2af4425770" />
 
 ### GPARTED
 
@@ -73,77 +73,79 @@ GParted és l'eina gràfica per excel·lència de l'entorn GNOME destinada a la 
 
 El primer pas requereix iniciar el programa. Un cop dins, cal localitzar el selector d'unitats situat a la part superior dreta de la finestra i assegurar-nos que tenim marcat el disc correcte abans de fer cap operació.
 
-![alt text](Imatges/20.png)
+<img width="1057" height="325" alt="Captura de pantalla de 2025-11-30 02-12-45" src="https://github.com/user-attachments/assets/0101a991-ba8a-4b1d-8dea-def23a87345b" />
 
 A continuació, ens dirigim a la barra de menús superior. Cliquem sobre la pestanya "Dispositivo" i, dins del desplegable, seleccionem l'opció "Crear tabla de particiones".
 
-![alt text](Imatges/21.png)
+<img width="1057" height="325" alt="Captura de pantalla de 2025-11-30 02-13-08" src="https://github.com/user-attachments/assets/62173879-3f8e-4b10-ab5a-de3c5498fd3a" />
 
 El sistema mostrarà una finestra d'advertència (ja que s'esborraran les dades). Dins d'aquest quadre de diàleg, hem de desplegar la llista de tipus de taula i seleccionar específicament l'opció gpt abans de continuar.
 
-![alt text](Imatges/22.png)
+<img width="1057" height="446" alt="Captura de pantalla de 2025-11-30 02-13-21" src="https://github.com/user-attachments/assets/7f7c0eea-34f6-443b-b51a-577e36da121f" />
 
 Amb la taula ja definida, visualitzarem l'espai com a "no assignat". Fem clic amb el botó dret sobre aquesta àrea i seleccionem l'opció per generar una nova partició.
 
-![alt text](Imatges/23.png)
+<img width="1057" height="446" alt="Captura de pantalla de 2025-11-30 02-13-42" src="https://github.com/user-attachments/assets/b8a47720-4bda-4881-b65e-79a63bb6745d" />
 
 En aquesta finestra de configuració, hem d'establir el sistema de fitxers com a NTFS. A més, tenim l'oportunitat de definir manualment la capacitat (mida) que volem assignar a aquest nou volum.
 
-![alt text](Imatges/24.png)
+<img width="1057" height="518" alt="Captura de pantalla de 2025-11-30 02-14-05" src="https://github.com/user-attachments/assets/2ec15020-5387-4bd9-89ba-6cd8c81fad60" />
 
 Com a pas últim, cal fer efectives totes les operacions pendents. Per fer-ho, premem la icona de validació (el vist o "tick" verd) de la barra d'eines i confirmem l'execució a la finestra emergent que apareix.
 
-![alt text](Imatges/25.png)
+<img width="1057" height="448" alt="Captura de pantalla de 2025-11-30 02-14-21" src="https://github.com/user-attachments/assets/7e7cd42b-5149-4a00-972a-c6ae0a9af613" />
 
 #### Via CLI (Command Line Interface)
 
 Per dur a terme aquesta tasca utilitzarem la utilitat **fdisk**. Assumint que en el pas anterior ja hem localitzat el dispositiu objectiu, executem la comanda i reproduïm la seqüència d'accions que s'il·lustra a la imatge adjunta.
 
-![alt text](Imatges/7.png)
+<img width="1093" height="665" alt="Captura de pantalla de 2025-11-30 02-25-10" src="https://github.com/user-attachments/assets/3b33f08c-8547-48d5-b0b9-307ca6351b21" />
 
 Seguidament, donem l'ordre per afegir una nova partició al disc.
 
-![alt text](Imatges/8.png)
+<img width="1093" height="665" alt="Captura de pantalla de 2025-11-30 02-27-04" src="https://github.com/user-attachments/assets/10ade084-16d9-4243-a5da-922b3f0ca887" />
 
 **Verificació**: En aquest punt, confirmem que el procés de generació s'ha completat amb èxit.
 
-![alt text](Imatges/9.png)
+<img width="656" height="249" alt="image" src="https://github.com/user-attachments/assets/ff2f3b22-5f7d-4825-9fea-4ce5bf0cc89d" />
 
 Seguidament, utilitzarem l'ordre **mkfs.ext4** per donar format a la partició. Aprofitarem per establir manualment una mida de bloc personalitzada de 2048 bytes.
 
-![alt text](Imatges/10.png)
+<img width="809" height="296" alt="image" src="https://github.com/user-attachments/assets/16993287-64cf-4632-98bb-80779054fdaf" />
 
 Per corroborar que la configuració s'ha aplicat correctament, executem la següent instrucció.
 
-![alt text](Imatges/11.png)
+<img width="430" height="71" alt="image" src="https://github.com/user-attachments/assets/7144d1a3-6135-4370-a99a-179e325ecf15" />
 
 Pel que fa a la segona partició, li assignarem el format **NTFS**. Aquest pas és essencial per garantir la plena compatibilitat amb sistemes Windows.
 
-![alt text](Imatges/12.png)
+<img width="553" height="95" alt="image" src="https://github.com/user-attachments/assets/9dfb371b-4491-4ef3-8f98-3027365eeb51" />
 
 Com a conclusió, executarem la utilitat gràfica GParted per realitzar una validació visual de l'estat final de les particions.
 
-![alt text](Imatges/13.png)
+<img width="766" height="286" alt="image" src="https://github.com/user-attachments/assets/2ded3032-1faf-4a77-b1ba-4dd4c929ae8b" />
 
 ### Muntatge
 
 Per iniciar aquesta secció, procedim a generar un nou directori i un fitxer dins de la ubicació **/mnt**.
 
-![alt text](Imatges/16.png)
+<img width="306" height="72" alt="image" src="https://github.com/user-attachments/assets/c6d5d733-3efb-4ca4-952d-a8700c2603bb" />
+
+<img width="172" height="28" alt="image" src="https://github.com/user-attachments/assets/73946abd-fbec-4a0c-b9a4-84468d645431" />
 
 Realitzem un muntatge manual de la unitat /dev/sdb1 al directori /mnt/particio1, especificant explícitament el sistema de fitxers ext4. Un cop la partició està accessible, procedim a generar un fitxer al seu interior.
 
-![alt text](Imatges/15.png)
+<img width="560" height="137" alt="image" src="https://github.com/user-attachments/assets/97eeb831-ffc4-4ca2-9b03-1281bbd6f02e" />
 
 Cal tenir present que el muntatge manual és volàtil: si reiniciem el sistema, la connexió es perdrà (tot i que les dades segueixen emmagatzemades físicament al disc).
 
 Per solucionar això i aconseguir que el muntatge sigui persistent i automàtic a l'arrencada, és necessari editar l'arxiu de configuració systema: /etc/fstab.
 
-![alt text](Imatges/18.png)
+<img width="522" height="193" alt="Captura de pantalla de 2025-11-30 06-23-44" src="https://github.com/user-attachments/assets/34be75fd-3388-41d8-9bab-45a7ef99c0bb" />
 
 Si procedim a reiniciar el sistema, comprovarem que el muntatge es realitza de manera automàtica, confirmant així que la configuració és permanent.
 
-![alt text](Imatges/19.png)
+<img width="278" height="46" alt="image" src="https://github.com/user-attachments/assets/9a6eb9cc-660d-4a27-a076-c74f63583746" />
 
 ## Gestió de procesos
 
@@ -205,7 +207,7 @@ En l'entorn Linux, la gestió d'identitats no depèn d'una base de dades complex
 
 **Anàlisi** de /etc/passwd: Aquest és el fitxer principal de referència. Conté la definició de tots els comptes d'usuari registrats al sistema. És un fitxer públic (llegible per tothom) que associa cada usuari amb els seus atributs bàsics.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/1.png>)
+<img width="1050" height="775" alt="Captura de pantalla de 2025-11-30 02-36-56" src="https://github.com/user-attachments/assets/20f2f57f-9687-41cb-b4f2-c6c3df9ad449" />
 
 Cada línia del fitxer defineix un usuari mitjançant 7 camps delimitats per dos punts (`:`):
 
@@ -221,7 +223,7 @@ Cada línia del fitxer defineix un usuari mitjançant 7 camps delimitats per dos
 
 ### Explicació: /etc/shadow
 
-![alt text](<Gestió d'usuaris i grups i permisos img/2.png>)
+<img width="1050" height="775" alt="Captura de pantalla de 2025-11-30 02-37-37" src="https://github.com/user-attachments/assets/e365c06e-5fda-4fd9-bde8-d297957de005" />
 
 Aquest fitxer és crític per a la seguretat del sistema. Emmagatzema les credencials xifrades i les polítiques de caducitat. A diferència del `passwd`, aquest arxiu té permisos restringits i **només pot ser llegit per l'usuari root**.
 
@@ -241,7 +243,7 @@ Cada línia es compon de 9 camps separats per dos punts (`:`):
 
 ### Explicació: /etc/group
 
-![alt text](<Gestió d'usuaris i grups i permisos img/14.png>)
+<img width="1050" height="775" alt="Captura de pantalla de 2025-11-30 02-39-58" src="https://github.com/user-attachments/assets/c7be0420-37e7-48c0-9c7d-d30def3ad589" />
 
 Aquest fitxer defineix els grups existents al sistema i determina quins usuaris hi tenen accés. És essencial per a la gestió de permisos col·lectius.
 
@@ -256,7 +258,7 @@ Cada línia consta de 4 camps separats per dos punts (`:`):
 
 ### Explicació: /etc/gshadow
 
-![alt text](<Gestió d'usuaris i grups i permisos img/15.png>)
+<img width="1050" height="775" alt="Captura de pantalla de 2025-11-30 02-41-10" src="https://github.com/user-attachments/assets/53030428-9c10-4216-bcf1-06010be7bc1c" />
 
 Aquest fitxer actua com a complement de seguretat per a `/etc/group`. S'utilitza per emmagatzemar les claus xifrades dels grups i definir-ne els administradors, protegirnt aquesta informació sensible de mirades indiscretes (només root el pot llegir).
 
@@ -273,59 +275,59 @@ Cada línia segueix l'esquema: `nom:password:admins:membres`.
 
 ### Adduser
 
-![alt text](<Gestió d'usuaris i grups i permisos img/3.png>)
+<img width="994" height="676" alt="Captura de pantalla de 2025-11-30 03-00-35" src="https://github.com/user-attachments/assets/c4b5e313-1ced-4b0f-9a1a-1577f3c93f1b" />
 
 ### Userdel
 
 Arribats a aquest punt, procedim a donar de baixa el compte d'usuari del sistema.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/4.png>)
+<img width="1055" height="246" alt="Captura de pantalla de 2025-11-30 03-01-26" src="https://github.com/user-attachments/assets/1bf9475e-d354-4a98-a1e0-61a48dd09cf1" />
 
 Seguidament, procedim a donar d'alta l'usuari mitjançant la comanda **useradd**. Durant aquest procés, definim el seu intèrpret de comandes (shell) personalitzat i finalitzem realitzant les validacions pertinents per confirmar que el compte és operatiu.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/5.png>)
+<img width="785" height="569" alt="Captura de pantalla de 2025-11-30 03-05-53" src="https://github.com/user-attachments/assets/0a1ff888-8bc1-48c3-8f62-a6d87a72a050" />
 
 Per establir o actualitzar la clau d'accés de l'usuari, executem l'eina **passwd**. El sistema ens demanarà introduir la nova credencial dues vegades per seguretat.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/6.png>)
+<img width="1416" height="261" alt="Captura de pantalla de 2025-11-30 03-06-35" src="https://github.com/user-attachments/assets/9cbc2736-3849-4f00-9023-271231124aee" />
 
 Amb aquesta acció aconseguim inhabilitar el compte. Si inspeccionem el fitxer **/etc/shadow**, notarem que el camp de la contrasenya ha estat modificat (habitualment amb un signe **!**) per impedir l'accés.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/7.png>)
+<img width="1416" height="261" alt="Captura de pantalla de 2025-11-30 03-08-08" src="https://github.com/user-attachments/assets/f720971b-0a78-4aa4-bc2b-ef01497a205f" />
 
 En cas de voler revertir el bloqueig i restablir l'accés al compte, farem servir el paràmetre **-U (Unlock)**.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/8.png>)
+<img width="1416" height="261" alt="Captura de pantalla de 2025-11-30 03-08-54" src="https://github.com/user-attachments/assets/86519a90-1159-487b-9b44-c82666fe5844" />
 
 Per donar d'alta nous grups al sistema, fem servir l'ordre **addgroup**. D'altra banda, si necessitem modificar els atributs d'un grup existent (com el nom o el GID), utilitzarem la utilitat **groupmod**.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/9.png>)
+<img width="1416" height="346" alt="Captura de pantalla de 2025-11-30 03-11-05" src="https://github.com/user-attachments/assets/09c2f0b0-95ce-46a2-80db-76bfcd8407d7" />
 
 Mitjançant aquest procediment, podem **vincular** els usuaris existents als diferents grups del sistema.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/10.png>)
+<img width="870" height="413" alt="Captura de pantalla de 2025-11-30 03-13-00" src="https://github.com/user-attachments/assets/f2176e2a-5177-482d-99f1-a7e75f984806" />
 
-**Validació del procés: Finalment**, verifiquem que els canvis s'han aplicat correctament al sistema.
+**Validació del procés**: Finalment, verifiquem que els canvis s'han aplicat correctament al sistema.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/11.png>)
+<img width="870" height="238" alt="Captura de pantalla de 2025-11-30 03-16-03" src="https://github.com/user-attachments/assets/41f79f7e-13a5-4114-98cd-c601a2b2d961" />
 
 D'altra banda, la comanda **deluser** també ens permet revocar la pertinença d'un usuari a un grup específic, excloent-lo d'aquest sense eliminar el seu compte.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/12.png>)
+<img width="870" height="238" alt="Captura de pantalla de 2025-11-30 03-16-29" src="https://github.com/user-attachments/assets/dacb10f5-0e54-428d-82b7-4d48094e3cf7" />
 
 Per canviar de sessió i operar sota la identitat d'un altre usuari sense tancar el terminal actual, utilitzem l'ordre **su (Switch User)**.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/13.png>)
+<img width="870" height="238" alt="Captura de pantalla de 2025-11-30 03-17-04" src="https://github.com/user-attachments/assets/702399ce-de55-40c4-8bfb-a8ad2535c984" />
 
 ### Permisos
 
 Per iniciar aquest bloc, procedim a generar el directori palomes i un fitxer anomenat prova. Un cop creats els recursos, en modifiquem l'assignació per canviar-ne el grup propietari.
 
-![alt text](Permisos/1.png)
+<img width="846" height="369" alt="Captura de pantalla de 2025-11-30 04-53-35" src="https://github.com/user-attachments/assets/581593b3-4c29-46c0-84d5-dbe9cb1bbcc4" />
 
 A la següent captura analitzem l'estructura dels permisos. Podem diferenciar clarament els nivells d'accés assignats al propietari, al grup i a la resta d'usuaris.
 
-![alt text](Permisos/2.png)
+<img width="846" height="441" alt="Captura de pantalla de 2025-11-30 04-57-18" src="https://github.com/user-attachments/assets/730dd2c6-314c-4f59-9594-bd4cc5af99b4" />
 
 Configuració de seguretat a /var/palomes:
 
@@ -335,19 +337,19 @@ Configuració de seguretat a /var/palomes:
 
 3. **Restricció de permisos**: Apliquem la màscara 750 (Total per al propietari, Lectura/Execució per al grup, Cap accés per a altres).
 
-![alt text](Permisos/3.png)
+<img width="846" height="441" alt="Captura de pantalla de 2025-11-30 04-57-18" src="https://github.com/user-attachments/assets/796c5f9d-4090-4dcb-b957-10dc5a0c095d" />
 
 Accedint amb les credencials de l'usuari nick, verifiquem que disposem de privilegis complets. Comprovem que podem llegir, crear i modificar fitxers sense restriccions (permisos rwx).
 
-![alt text](Permisos/4.png)
+<img width="621" height="202" alt="Captura de pantalla de 2025-11-30 05-09-59" src="https://github.com/user-attachments/assets/f1a6fc21-6d3f-49fd-8411-fe81618fb86d" />
 
 Per contra, si intentem realitzar la mateixa acció des de la sessió de l'usuari cire, el sistema ens denegarà l'accés, confirmant que aquest usuari no disposa dels permisos d'escriptura necessaris.
 
-![alt text](Permisos/5.png)
+<img width="1002" height="285" alt="Captura de pantalla de 2025-11-30 05-13-14" src="https://github.com/user-attachments/assets/586e96e5-57bc-4643-90c2-b30b06850b17" />
 
 Finalment, pel que fa a l'usuari ferran (que pertany a la categoria "Altres"), comprovem que té l'accés completament restringit. No disposa de permís d'execució, per la qual cosa no pot ni tan sols accedir al directori.
 
-![alt text](Permisos/6.png)
+<img width="1002" height="194" alt="Captura de pantalla de 2025-11-30 05-15-10" src="https://github.com/user-attachments/assets/af1c6d67-2bd1-4f62-97fd-58e2adc4e192" />
 
 Ampliació de l'accés al directori /var/palomes:
 
@@ -355,7 +357,7 @@ Ampliació de l'accés al directori /var/palomes:
 
 - **Modificació de permisos**: Executem chmod g+w per atorgar permisos d'escriptura al grup. Ara, tots els membres del grup podran crear i modificar fitxers, no només llegir-los.
 
-![alt text](Permisos/7.png)
+<img width="1002" height="280" alt="Captura de pantalla de 2025-11-30 05-17-51" src="https://github.com/user-attachments/assets/37a1d730-df6f-4229-bd94-b2425f474152" />
 
 **Validació funcional dels permisos de grup**:
 
@@ -367,7 +369,7 @@ Hem realitzat proves d'accés amb dos membres del grup paloma per confirmar la n
 
 **Conclusió**: La configuració és correcta per a un entorn col·laboratiu. Els membres del grup tenen llibertat per treballar dins la carpeta, tot i les alertes de seguretat en manipular fitxers existents.
 
-![alt text](Permisos/8.png)
+<img width="1002" height="364" alt="Captura de pantalla de 2025-11-30 05-20-46" src="https://github.com/user-attachments/assets/19ebd78d-3182-4d12-8aff-83bb7fb438f4" />
 
 **Validació dels privilegis de grup a /var/palomes**:
 
@@ -381,17 +383,19 @@ Nota: En intentar esborrar un fitxer, el sistema sol·licita confirmació. Això
 
 **Conclusió**: La carpeta disposa dels permisos correctes per al treball en grup, permetent la creació i gestió de fitxers a tots els membres.
 
-![alt text](Permisos/9.png)
+<img width="1011" height="518" alt="Captura de pantalla de 2025-11-30 05-34-42" src="https://github.com/user-attachments/assets/70a62499-acc4-422b-9a5b-0f4c39303042" />
 
 **Diagnòstic de permisos: L'efecte de l'Sticky Bit**
 
 Durant les proves, hem detectat una limitació en la col·laboració. Tot i que ambdós usuaris (deivy i ferran) tenen accés al directori i poden crear fitxers, **l'usuari Ferran no pot eliminar els arxius creats per Deivy**.
 
-**Causa tècnica**: Analitzant els permisos del directori, observem la marca T al final (drwxrwx--T). Això indica que el Sticky Bit (bit de permanència) està actiu.
+**Causa tècnica**: Analitzant els permisos del directori, observem la marca **T** al final (drwxrwx--T). Això indica que el Sticky Bit (bit de permanència) està actiu.
 
 **Conseqüència**: Aquest bit afegeix una capa de seguretat que restringeix l'esborrat de fitxers: només el propietari del fitxer (o root) pot eliminar-lo, independentment dels permisos de grup. Això impedeix que els usuaris s'esborrin fitxers entre ells accidentalment.
 
-![alt text](Permisos/10.png)
+<img width="784" height="119" alt="Captura de pantalla de 2025-11-30 05-30-26" src="https://github.com/user-attachments/assets/1ffbd164-3ccc-4242-bb25-403bc16af04d" />
+
+<img width="714" height="149" alt="Captura de pantalla de 2025-11-30 05-35-53" src="https://github.com/user-attachments/assets/363e859d-0ffa-48b4-ac72-47576e8558f7" />
 
 Finalment, analitzem el permís especial SUID (Set User ID). Per demostrar-ne el potencial (i el risc), hem configurat aquest bit sobre l'executable /bin/bash.
 
@@ -409,11 +413,15 @@ Aquesta configuració permet una escalada de privilegis: com que el propietari d
 
 3. **Reforç de la Seguretat**: Faciliten l'aplicació estricta del Principi de Mínim Privilegi (PoLP), assegurant que cada usuari tingui exactament els permisos que necessita, ni més ni menys, i millorant la traçabilitat de l'accés.
 
-![alt text](ACL/1.png)
+<img width="798" height="76" alt="Captura de pantalla de 2025-11-30 05-57-04" src="https://github.com/user-attachments/assets/7f094e24-e6f6-4a74-8133-641ccc35c71b" />
+<img width="355" height="193" alt="Captura de pantalla de 2025-11-30 05-57-43" src="https://github.com/user-attachments/assets/e52275ca-dc78-41b7-92cc-c6418c5dfb75" />
 
-![alt text](ACL/2.png)
+<img width="601" height="32" alt="Captura de pantalla de 2025-11-30 05-58-00" src="https://github.com/user-attachments/assets/393732ff-6011-4d6a-9982-5d9e4e06a782" />
+<img width="420" height="134" alt="Captura de pantalla de 2025-11-30 05-58-18" src="https://github.com/user-attachments/assets/3dee477b-85f1-48a9-a432-9b96bcea2616" />
+<img width="591" height="26" alt="image" src="https://github.com/user-attachments/assets/f7133618-185e-4d20-a012-f948ab977d2f" />
+<img width="749" height="134" alt="Captura de pantalla de 2025-11-30 05-58-48" src="https://github.com/user-attachments/assets/b1929259-65c7-4d79-b7c4-04b03fb2d26b" />
 
-![alt text](ACL/3.png)
+<img width="758" height="242" alt="Captura de pantalla de 2025-11-30 05-59-30" src="https://github.com/user-attachments/assets/669c8e50-27df-4279-820a-aa0e73ef5674" />
 
 ## Umask
 
@@ -427,7 +435,7 @@ Aquesta configuració permet una escalada de privilegis: com que el propietari d
 
 **Verificació**: Per consultar el valor actual actiu, executem la comanda umask.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/17.png>)
+<img width="686" height="108" alt="Captura de pantalla de 2025-11-30 06-01-19" src="https://github.com/user-attachments/assets/88efcc1d-6e50-41fe-bc53-4b6dab0a0e34" />
 
 ### Valors per defecte (Ubuntu)
 
@@ -436,7 +444,7 @@ Aquesta configuració permet una escalada de privilegis: com que el propietari d
 | **Usuari Estàndard** | `0002` | **664** `(rw-rw-r--)`<br>*(Grup amb escriptura)* | **775** `(rwxrwxr-x)` |
 | **Root (Admin)** | `0022` | **644** `(rw-r--r--)`<br>*(Grup només lectura)* | **755** `(rwxr-xr-x)` |
 
-![alt text](<Gestió d'usuaris i grups i permisos img/18.png>)
+<img width="686" height="108" alt="Captura de pantalla de 2025-11-30 06-00-49" src="https://github.com/user-attachments/assets/abef3296-c8ef-4045-b6fb-2438c8b4494d" />
 
 ### Funcionament del càlcul
 
@@ -450,11 +458,11 @@ El sistema determina els permisos finals restant la umask als valors base:
 
 * En l'exemple següent, he **modificat temporalment** la umask i he realitzat una prova de creació (carpeta i arxiu) per verificar els nous permisos.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/19.png>)
+<img width="791" height="253" alt="Captura de pantalla de 2025-11-30 06-03-04" src="https://github.com/user-attachments/assets/054fd425-b40d-4f21-83b0-1a6d55d7e879" />
 
 Per aconseguir la persistència d'aquesta configuració (que s'apliqui sempre), cal editar els paràmetres dins del fitxer login.defs.
 
-![alt text](<Gestió d'usuaris i grups i permisos img/21.png>)
+<img width="1011" height="515" alt="Captura de pantalla de 2025-11-30 06-03-52" src="https://github.com/user-attachments/assets/34c23387-598e-4525-a72c-6af9184a402e" />
 
 ## Gestió avançada
 
