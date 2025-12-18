@@ -464,9 +464,8 @@ Per aconseguir la persistència d'aquesta configuració (que s'apliqui sempre), 
 
 <img width="1011" height="515" alt="Captura de pantalla de 2025-11-30 06-03-52" src="https://github.com/user-attachments/assets/34c23387-598e-4525-a72c-6af9184a402e" />
 
-## Gestió avançada
-
-## PAM
+## Gestió de processos
 
 ## Còpies de seguretat i automatització de tasques
+
 ## Quotes d'usuari
