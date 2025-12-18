@@ -147,27 +147,6 @@ Si procedim a reiniciar el sistema, comprovarem que el muntatge es realitza de m
 
 <img width="278" height="46" alt="image" src="https://github.com/user-attachments/assets/9a6eb9cc-660d-4a27-a076-c74f63583746" />
 
-## Gestió de procesos
-
-Tècnicament, definim un procés com l'entitat dinàmica resultant d'executar un codi o programa. Per a la seva gestió, el sistema vincula cada procés a un usuari concret i li atorga una matrícula numèrica exclusiva anomenada PID. Al llarg del seu cicle de vida, un procés transita per diferents fases (actiu, en espera, zombi...), i és funció del Sistema Operatiu actuar com a àrbitre, administrant la planificació i l'ús de la CPU per a cadascun d'ells.
-
-### Eines bàsiques de gestió de processos
-
-### Eines de Gestió de Processos
-
-Per administrar el sistema disposem de diverses utilitats de línia de comandes, classificades segons la seva finalitat:
-
-| Acció | Comandes | Detalls |
-| :--- | :--- | :--- |
-| **Visualitzar** | `ps`, `top`, `htop` | Mostren la llista de tasques actives i el seu consum. |
-| **Finalitzar** | `kill`, `pkill` | Permeten matar processos específics (mitjançant ID o nom). |
-| **Prioritzar** | `nice`, `renice` | Ajusten la prioritat de la CPU ("niceness"). |
-| **Serveis** | `systemctl`, `service` | Controlen els daemons del sistema (start/stop/restart). |
-
-> **Conceptes clau:** Un procés sempre està vinculat a un usuari (del qual n'hereta els permisos) i pot funcionar com a part d'una sessió o com un servei de fons.
-
-Tot seguit, posarem en pràctica aquests conceptes bàsics.
-
 ## Gestió d'usuaris i grups i permisos
 
 L'arquitectura de seguretat en sistemes Linux es fonamenta en la distinció entre **usuaris i grups**. Aquests dos elements són la clau per gestionar els **privilegis**, determinant qui té autorització per interactuar (llegir, editar o llançar) amb els recursos del sistema, ja siguin fitxers o processos en marxa.
@@ -464,8 +443,26 @@ Per aconseguir la persistència d'aquesta configuració (que s'apliqui sempre), 
 
 <img width="1011" height="515" alt="Captura de pantalla de 2025-11-30 06-03-52" src="https://github.com/user-attachments/assets/34c23387-598e-4525-a72c-6af9184a402e" />
 
-## Gestió de processos
+## Gestió de procesos
 
+Tècnicament, definim un procés com l'entitat dinàmica resultant d'executar un codi o programa. Per a la seva gestió, el sistema vincula cada procés a un usuari concret i li atorga una matrícula numèrica exclusiva anomenada PID. Al llarg del seu cicle de vida, un procés transita per diferents fases (actiu, en espera, zombi...), i és funció del Sistema Operatiu actuar com a àrbitre, administrant la planificació i l'ús de la CPU per a cadascun d'ells.
+
+### Eines bàsiques de gestió de processos
+
+### Eines de Gestió de Processos
+
+Per administrar el sistema disposem de diverses utilitats de línia de comandes, classificades segons la seva finalitat:
+
+| Acció | Comandes | Detalls |
+| :--- | :--- | :--- |
+| **Visualitzar** | `ps`, `top`, `htop` | Mostren la llista de tasques actives i el seu consum. |
+| **Finalitzar** | `kill`, `pkill` | Permeten matar processos específics (mitjançant ID o nom). |
+| **Prioritzar** | `nice`, `renice` | Ajusten la prioritat de la CPU ("niceness"). |
+| **Serveis** | `systemctl`, `service` | Controlen els daemons del sistema (start/stop/restart). |
+
+> **Conceptes clau:** Un procés sempre està vinculat a un usuari (del qual n'hereta els permisos) i pot funcionar com a part d'una sessió o com un servei de fons.
+
+Tot seguit, posarem en pràctica aquests conceptes bàsics.
 ## Còpies de seguretat i automatització de tasques
 
 ## Quotes d'usuari
