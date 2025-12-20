@@ -699,6 +699,8 @@ Seguidament, mitjançant la comanda `mkfs.ext4`, donem format als nous volums pe
 
 <img width="499" height="38" alt="Captura de pantalla de 2025-12-18 13-22-58" src="https://github.com/user-attachments/assets/d0220b3e-cc6c-4782-a36a-ca39d8fa0f2c" />
 
+<img width="648" height="451" alt="Captura de pantalla de 2025-12-18 13-25-52" src="https://github.com/user-attachments/assets/347f71c7-92fc-49e4-aaed-d82417175983" />
+
 <img width="786" height="542" alt="Captura de pantalla de 2025-12-18 13-23-30" src="https://github.com/user-attachments/assets/90027348-b310-471b-bf19-bac626d591e3" />
 
 **Generació de dades de test**
