@@ -463,6 +463,254 @@ Per administrar el sistema disposem de diverses utilitats de línia de comandes,
 > **Conceptes clau:** Un procés sempre està vinculat a un usuari (del qual n'hereta els permisos) i pot funcionar com a part d'una sessió o com un servei de fons.
 
 Tot seguit, posarem en pràctica aquests conceptes bàsics.
+
+**top / htop / btop**
+
+Serveixen per visualitzar els processos actius al moment. A diferència del top clàssic, l'eina btop ofereix un entorn molt més visual, organitzat i fàcil d'utilitzar.
+
+top
+
+<img width="915" height="728" alt="image" src="https://github.com/user-attachments/assets/ed573f25-7816-4cd2-8e52-dbef221d70e0" />
+
+htop
+
+<img width="915" height="728" alt="image" src="https://github.com/user-attachments/assets/30bf0ca0-2252-47e4-bbea-f769ad9a39fb" />
+
+btop
+
+<img width="1189" height="730" alt="image" src="https://github.com/user-attachments/assets/673554c7-33b9-40e3-8f40-14c2fbad1474" />
+
+### Gestió de Prioritats (PR i NI)
+
+En el monitoratge de processos, la prioritat es defineix mitjançant dos valors clau:
+
+* **PR (Priority):** Prioritat real gestionada pel Kernel. L'usuari no la modifica directament.
+* **NI (Nice):** Valor de "cortesia" modificable per l'usuari (-20 a +19). El sistema calcula la PR basant-se en aquest valor.
+
+**Escala de valors NI**
+Funciona a la inversa: quan més baix és el número, més prioritat té el procés.
+
+* **-20:** Màxima prioritat (Acapara la CPU).
+* **0:** Valor estàndard.
+* **+19:** Mínima prioritat (Cedeix recursos a la resta).
+
+**Comandes de gestió**
+
+* `nice -n [valor] [comanda]`: Executar un programa nou amb una prioritat específica.
+* `renice -n [valor] -p [PID]`: Canviar la prioritat d'un procés ja actiu.
+
+<img width="918" height="780" alt="image" src="https://github.com/user-attachments/assets/0e11c3b3-4dc1-4c97-b10a-a1e7810feba2" />
+
+### Visualització jeràrquica (pstree)
+
+Aquesta comanda organitza els processos actius en format d'arbre genealògic. És l'eina ideal per entendre les relacions "pare-fill" i identificar ràpidament quin procés n'ha executat un altre.
+
+**Paràmetres principals:**
+
+* `pstree -p`: Afegeix el **PID** al costat del nom de cada branca.
+* `pstree -u`: Indica l'**usuari** (propietari) de cada procés.
+* `pstree -h`: Ressalta en negreta el procés des d'on s'està executant la comanda (el procés actual).
+
+<img width="781" height="1003" alt="Captura de pantalla de 2025-12-02 13-10-01" src="https://github.com/user-attachments/assets/d1425eb8-30f5-4b39-b126-0aa38031fd77" />
+
+**Permisos d'administrador:** Si s'executa la comanda amb `sudo` o com a usuari **root**, es mostraran també els processos del sistema que normalment estan ocults per als usuaris estàndard.
+
+<img width="844" height="690" alt="image" src="https://github.com/user-attachments/assets/2d7b4251-ee2e-4356-ad3d-7a590479898c" />
+
+**Filtratge de resultats:**
+Per a cerques específiques (un usuari o programa concret), podem canalitzar la sortida utilitzant `grep`.
+
+* **Sintaxi:** `pstree | grep <nom_a_buscar>`
+* **Exemple:** `pstree -p | grep firefox` (Mostraria només la branca del Firefox).
+
+<img width="905" height="188" alt="image" src="https://github.com/user-attachments/assets/00fb2980-3d09-408c-85f2-95155406ef74" />
+
+### Instantània de processos (ps)
+
+La comanda `ps` genera una "fotografia" fixa de l'estat actual del sistema. És essencial per analitzar detalladament el consum de recursos.
+
+La combinació més utilitzada és **`ps aux`**, que uneix tres paràmetres per donar la visió global:
+
+* **a (All):** Visualitza els processos de tots els usuaris (sempre que tinguin un terminal/TTY).
+* **u (User-oriented):** Afegeix columnes vitals com `%CPU`, `%MEM` i l'hora d'inici (`START`).
+* **x:** Fonamental per veure processos de fons ("daemons" o serveis) que no estan lligats a cap terminal.
+
+<img width="805" height="535" alt="Captura de pantalla de 2025-12-02 13-13-52" src="https://github.com/user-attachments/assets/70cf6861-d8cb-4a0c-9d5d-ec8fbc57ef70" />
+
+### Interpretació de les dades (Columnes clau)
+
+Quan analitzem la sortida de `ps aux`, les dades s'organitzen en dos grups principals:
+
+**Identificació i Estat**
+* **USER / PID:** Qui executa el procés i el seu identificador únic (DNI del procés).
+* **COMMAND:** L'ordre exacta que s'ha llançat.
+* **TTY:** El terminal on s'executa (`?` significa que és un servei de fons).
+* **STAT:** L'estat actual (veure taula de codis més avall).
+* **START / TIME:** Quan va començar i quants minuts de processador ha consumit en total.
+
+**Consum de Recursos**
+| Columna | Significat | Diferència clau |
+| :--- | :--- | :--- |
+| **%CPU / %MEM** | Càrrega actual | Ús instantani del processador i la RAM. |
+| **VSZ** (Virtual) | Memòria assignada | Tot el que el programa *podria* arribar a usar (inclou llibreries compartides). |
+| **RSS** (Resident) | Memòria real | La RAM física que està ocupant *ara mateix*. Aquesta és la xifra important. |
+
+### Codis d'Estat (STAT)
+
+Indiquen què està fent el procés en aquell precís moment:
+
+* **R (Running):** Actiu. Està treballant a la CPU o fent cua per entrar-hi.
+* **S (Sleeping):** Dormint. Espera que passi alguna cosa (un clic, rebre dades, etc.). És l'estat més comú.
+* **D (Disk Sleep):** Bloquejat per maquinari. Està esperant una lectura/escriptura de disc crítica. No es pot interrompre.
+* **Z (Zombie):** Procés mort. Ha acabat, però el seu "pare" encara no ha estat notificat. No consumeix recursos, només un PID.
+* **T (Stopped):** Pausat manualment (congelat).
+
+### Gestió de Senyals (Kill)
+
+La comanda `kill` no només serveix per tancar programes, sinó per comunicar-s'hi enviant senyals al Kernel (PID).
+
+**Per finalitzar processos:**
+* **SIGTERM (15):** *La forma educada.* Demana al programa que tanqui i guardi els canvis. És l'opció per defecte.
+* **SIGINT (2):** *Interrupció.* El mateix que fer `Ctrl+C`. Talla l'execució des del terminal.
+* **SIGKILL (9):** *La forma dràstica.* El Kernel elimina el procés immediatament. No guarda res. Útil quan el sistema no respon (el programa "s'ha penjat").
+
+**Per controlar l'execució:**
+* **SIGHUP (1):** *Reload.* Reinicia la configuració sense aturar el servei (molt usat en servidors web).
+* **SIGSTOP (19) / SIGCONT (18):** *Pause & Play.* El 19 congela el procés (com un `Ctrl+Z` forçat) i el 18 el reprèn on estava.
+
+### Dreceres de teclat (Interactivitat)
+
+Quan treballem en terminal amb eines com `top`, és vital distingir entre tancar i pausar:
+
+> **Ctrl + C (SIGINT)**
+> * **Acció:** Tanca el programa definitivament.
+> * **Resultat:** Allibera la memòria i torna al terminal.
+
+> **Ctrl + Z (SIGSTOP)**
+> * **Acció:** Posa el programa en "Pausa" (Background).
+> * **Atenció:** El programa NO s'ha tancat. Continua ocupant memòria RAM però està congelat (Estat T). Cal recuperar-lo (`fg`) o matar-lo després.
+
+<img width="328" height="37" alt="image" src="https://github.com/user-attachments/assets/bbebd846-397d-42ed-81fb-91fe76e28582" />
+
+### Execució en segon pla (&)
+
+Si volem llançar un programa sense que ens bloquegi la terminal (per poder seguir escrivint comandes), afegim el símbol `&` al final de la línia.
+
+* **Sintaxi:** `comanda &`
+* **Exemple:** `firefox &`
+* **Resultat:** El programa s'obre, el sistema ens mostra el PID assignat i recuperem el control de la consola immediatament.
+
+<img width="360" height="37" alt="image" src="https://github.com/user-attachments/assets/e226275c-ad46-40c5-ad62-60dcecf7329e" />
+
+### Recuperació de processos (Jobs i fg)
+
+Si hem enviat un procés al segon pla (o està aturat amb `Ctrl+Z`), per recuperar-lo seguim dos passos:
+
+1.  **Llistar:** Executem `jobs` per veure la llista de tasques i el seu número d'identificació (Job ID), que apareix entre claudàtors, per exemple `[1]`.
+2.  **Recuperar:** Utilitzem la comanda `fg` (foreground) seguida del número.
+
+**Exemple pràctic:**
+* `jobs` -> Ens mostra: `[1]+ Stopped vim text.txt`
+* `fg %1` -> Recupera l'editor de text al primer pla.
+
+<img width="363" height="77" alt="image" src="https://github.com/user-attachments/assets/29b66155-496c-4072-bbab-b30b13089429" />
+
+**Retorn al primer pla (fg):**
+Per recuperar el control d'un programa aturat (com el `top` que hem pausat abans), utilitzem la comanda `fg`. Això restaura la finestra immediatament on la vam deixar.
+
+### Mètodes de finalització
+
+**Sortida neta (Tecla `q`)**
+Dins de la interfície de `top`, prémer **`q`** és el mètode correcte per finalitzar la sessió. Això tanca el programa ordenadament sense generar errors.
+
+**Sortida forçosa (`kill -9`)**
+Si un procés no respon, l'opció `-9` envia el senyal **SIGKILL**.
+* **Funció:** És una ordre directa i innegociable al Kernel.
+* **Efecte:** El procés s'elimina immediatament de la memòria sense tenir temps de guardar dades ni tancar fitxers. S'ha d'usar amb precaució.
+
+**Cas Pràctic: VirtualBox**
+Per gestionar una aplicació pesada com VirtualBox:
+1. Obrim `top` i busquem la fila corresponent a *VirtualBox*.
+2. Anotem el seu número **PID** (primera columna).
+3. Si es bloquegés, podríem tancar-lo des d'un altre terminal amb: `kill -9 <PID_trobat>`.
+
+<img width="1029" height="695" alt="image" src="https://github.com/user-attachments/assets/a5d77d7d-59f5-4bf8-9d7a-8dbab160dab6" />
+
+<img width="348" height="31" alt="image" src="https://github.com/user-attachments/assets/6b221cb0-b036-4b03-b691-69b2f39f90a7" />
+
+Com es pot veure a la imatge, el procés objectiu ja no figura a la taula d'activitat, indicant que el sistema ha forçat el seu tancament amb èxit.
+
+<img width="751" height="186" alt="image" src="https://github.com/user-attachments/assets/e676f109-ad2f-4c31-a362-6d2b4189ac83" />
+
 ## Còpies de seguretat i automatització de tasques
+
+### Còpies de Seguretat
+
+#### Objectiu i Amenaces
+La missió principal d'un backup no és guardar dades, sinó **garantir-ne la recuperació**. Ens protegeixen davant quatre vectors de risc:
+
+* **Falles físiques:** Trencament de discos o hardware.
+* **Errors lògics:** Esborrat accidental humà.
+* **Amenaces externes:** Ransomware, virus i atacs.
+* **Desastres:** Incendis o robatoris.
+
+### Estratègies de Còpia (Comparativa)
+No existeix la còpia perfecta; triem segons l'equilibri entre espai ocupat i temps de recuperació.
+
+| Tipus | Què es copia? | Avantatges (+) | Inconvenients (-) |
+| :--- | :--- | :--- | :--- |
+| **COMPLETA** (Full) | Tot (100% de les dades). | Recuperació ràpida i senzilla (només cal 1 fitxer). | Molt lenta de generar i ocupa molt disc. |
+| **INCREMENTAL** | Només el que ha canviat des de l'*últim backup* (sigui quin sigui). | Molt ràpida i lleugera (ocupa poc). | Recuperació lenta (cal reconstruir la cadena sencera). |
+| **DIFERENCIAL** | Tot el que ha canviat des de l'última *Completa*. | Punt mig: recuperació més àgil que la incremental. | Duplica dades i ocupa més espai progressivament. |
+
+### Eines de Còpia (Teoria de Comandes)
+
+A Linux treballem a dos nivells diferents:
+
+**A. Nivell de Fitxer (`cp` i `rsync`)**
+
+* **`cp` (Còpia Estàndard):**
+    * *Mecànica:* Llegeix l'origen i sobreescriu el destí cegament.
+    * *Problema:* No verifica si el fitxer ja existeix o és idèntic, malgastant recursos.
+
+* **`rsync` (Sincronització Intel·ligent):**
+    * *Mecànica:* Utilitza l'algoritme *Delta Encoding*. Compara origen i destí.
+    * *Avantatge:* Només transfereix les parts modificades (blocs nous), ideal per xarxes i backups eficients.
+
+**B. Nivell de Bloc / Clonatge (`dd`)**
+
+* **`dd` (Disk Dump):**
+    * *Mecànica:* Còpia "bit a bit" sense entendre de fitxers.
+    * *Detall important:* Si clonem un disc de 500GB amb només 1GB de dades, **copiarà els 500GB sencers** (incloent l'espai buit). És una imatge exacta del dispositiu físic.
+
+### 4. Preparació de l'entorn (Pràctica)
+
+Per realitzar les proves, configurem la màquina virtual amb el següent maquinari:
+
+1.  Afegir **2 Discos Durs** de 1 GB cadascun (Virtuals).
+2.  Iniciar el sistema i identificar els nous dispositius amb:
+    `fdisk -l`
+
+<img width="745" height="260" alt="Captura de pantalla de 2025-12-18 13-19-55" src="https://github.com/user-attachments/assets/6c7c8591-8372-4c67-b1f9-494bc0fb1bb8" />
+
+**Configuració de volums:**
+Per utilitzar els nous discs, primer generem una taula de particions on assignem tot l'espai disponible a una sola partició primària per disc.
+Seguidament, mitjançant la comanda `mkfs.ext4`, donem format als nous volums per fer-los compatibles amb el sistema de fitxers de Linux.
+
+<img width="499" height="38" alt="Captura de pantalla de 2025-12-18 13-22-58" src="https://github.com/user-attachments/assets/d0220b3e-cc6c-4782-a36a-ca39d8fa0f2c" />
+
+<img width="786" height="542" alt="Captura de pantalla de 2025-12-18 13-23-30" src="https://github.com/user-attachments/assets/90027348-b310-471b-bf19-bac626d591e3" />
+
+**Generació de dades de test**
+
+Per verificar el funcionament de les còpies, necessitem dades d'origen. Creem una estructura simple:
+
+1.  Generem el directori: `mkdir prova`
+2.  Creem un fitxer de text a l'interior: `touch prova/prova2`
+
+<img width="566" height="98" alt="Captura de pantalla de 2025-12-18 13-25-24" src="https://github.com/user-attachments/assets/54dcac52-c3a2-4c6e-9645-b2fba7889f28" />
+
+
+
 
 ## Quotes d'usuari
