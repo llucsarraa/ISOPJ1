@@ -1003,7 +1003,7 @@ Validació del funcionament "Per verificar que les restriccions s'apliquen corre
 
 En generar un segon fitxer de característiques idèntiques, l'ús de disc ascendeix als 1600 blocs. Com que aquesta xifra excedeix el Soft Limit (fixat en 1024), el sistema activa automàticament l'estat d'alerta i ens notifica que hem entrat en el període de gràcia (grace period), indicant-nos els dies restants per regularitzar la situació.
 
-<img width="696" height="623" alt="image" src="https://github.com/user-attachments/assets/401b1c2b-4761-4647-8bfc-07ad90620207" />
+<img width="672" height="591" alt="image" src="https://github.com/user-attachments/assets/16f3c481-1308-4498-8e29-192f499037d4" />
 
 En intentar repetir el procediment per tercera vegada, el sistema bloqueja definitivament l'operació mostrant l'error Se ha excedido la cuota de disco (o Disk quota exceeded). Cal destacar un comportament interessant: en lloc de generar un fitxer de mida zero (com passa en altres entorns), el sistema ha permès una escriptura parcial, truncant el fitxer exactament en arribar als 2048 KiB del Hard Limit.
 
