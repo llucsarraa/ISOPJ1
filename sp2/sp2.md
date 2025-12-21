@@ -963,10 +963,54 @@ Hi ha dos tipus de recursos que es controlen amb les quotes:
 **Instal·lació del paquet**
 Per començar, instal·lem l'eina de quotes:
 
-```bash
-sudo apt install quota
-
 <img width="532" height="27" alt="Captura de pantalla de 2025-12-21 08-17-59" src="https://github.com/user-attachments/assets/f3d56e7e-7e1e-40de-8d0f-b3cb522cba8d" />
+
+Accedim al directori /mnt i en creem un de nou.
+
+<img width="383" height="106" alt="image" src="https://github.com/user-attachments/assets/98f8a67a-6622-4074-9e6b-f21b0026dac0" />
+
+Per realitzar aquest procediment, he utilitzat el segon disc d'1 GB que he afegit a la màquina. Ara editem el fitxer de configuració amb l'ordre nano /etc/fstab i hi afegim els paràmetres requerits.
+
+<img width="825" height="356" alt="image" src="https://github.com/user-attachments/assets/c6581da3-2e81-4d51-8d1d-1e86ffaf34b9" />
+
+Una vegada fet, veiem que si fem un ls a la ruta on es troba el directori, encara no ens apareixen els fitxers que en teoria haurien de sortir després d'afegir les quotes.
+
+<img width="732" height="428" alt="image" src="https://github.com/user-attachments/assets/8fd98ea8-ae07-4c1f-b554-df6fdef71cb7" />
+
+Per generar-los, executem l'ordre quotacheck -cug /mnt/dades. Ara ja podem veure que s’han creat els fitxers.
+
+<img width="551" height="129" alt="image" src="https://github.com/user-attachments/assets/3e7bc5e9-b21a-464f-87aa-01b4cfd5456c" />
+
+Per si de cas, per assegurar-nos del bon funcionament, podem fer un quotaon /mnt/dades, tot i que ja hauria d'estar activat. Per desactivar-lo, faríem el mateix però amb quotaoff.
+
+<img width="551" height="129" alt="image" src="https://github.com/user-attachments/assets/1eb01f47-d923-42d0-9fec-99318a9c6b06" />
+
+Amb un usuari que ja tinguéssim creat, o que creem ara per fer la prova, podem veure quines quotes té assignades en aquest directori.
+
+<img width="551" height="129" alt="image" src="https://github.com/user-attachments/assets/dc486f6c-c74b-4fa4-bf1e-a03af46a531e" />
+
+"Per assignar o modificar els límits de l'usuari, executem l'ordre edquota -u usuari. Aquesta acció obrirà un editor de text on podrem definir els valors exactes de la quota."
+
+<img width="459" height="26" alt="image" src="https://github.com/user-attachments/assets/db751d2c-891a-4439-b3bd-4bf6699ea318" />
+
+Aplicant la teoria dels límits descrita anteriorment, procedirem a restringir l'ús de blocs (espai en disc). Dins l'editor, assignarem un valor de 1024 a la columna soft i de 2048 a la columna hard, deixant els inodes sense limitació.
+
+<img width="814" height="130" alt="image" src="https://github.com/user-attachments/assets/62d4d2cd-89a8-4796-93f1-a7a0fd647d1a" />
+
+Validació del funcionament "Per verificar que les restriccions s'apliquen correctament, generarem un fitxer de prova de 800 KiB mitjançant l'ordre dd. En consultar l'estat de la quota, observarem que el sistema comptabilitza l'espai ocupat (800 blocs) sense emetre cap alerta, ja que ens mantenim per sota del llindar suau (Soft Limit)."
+
+<img width="929" height="632" alt="image" src="https://github.com/user-attachments/assets/2ac86264-9305-4aac-b776-b852165c6a41" />
+
+En generar un segon fitxer de característiques idèntiques, l'ús de disc ascendeix als 1600 blocs. Com que aquesta xifra excedeix el Soft Limit (fixat en 1024), el sistema activa automàticament l'estat d'alerta i ens notifica que hem entrat en el període de gràcia (grace period), indicant-nos els dies restants per regularitzar la situació.
+
+<img width="696" height="623" alt="image" src="https://github.com/user-attachments/assets/401b1c2b-4761-4647-8bfc-07ad90620207" />
+
+En intentar repetir el procediment per tercera vegada, el sistema bloqueja definitivament l'operació mostrant l'error Se ha excedido la cuota de disco (o Disk quota exceeded). Cal destacar un comportament interessant: en lloc de generar un fitxer de mida zero (com passa en altres entorns), el sistema ha permès una escriptura parcial, truncant el fitxer exactament en arribar als 2048 KiB del Hard Limit.
+
+<img width="833" height="293" alt="image" src="https://github.com/user-attachments/assets/d7d4b3d2-5778-4aa7-b094-b1794c431f3e" />
+
+<img width="641" height="216" alt="image" src="https://github.com/user-attachments/assets/f66df54b-e646-4cad-96e2-e0868ee47726" />
+
 
 
 
