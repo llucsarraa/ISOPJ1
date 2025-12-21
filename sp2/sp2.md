@@ -832,7 +832,142 @@ En finalitzar la instal·lació, veurem que el programa no apareix al menú d'ap
 
 <img width="770" height="445" alt="image" src="https://github.com/user-attachments/assets/1d4ec228-fd74-4362-a22e-7919e48be425" />
 
+Li donem a Cree su primer respaldo.
 
+<img width="528" height="230" alt="image" src="https://github.com/user-attachments/assets/cbb5b771-dbc4-41f5-b23e-1e6b851316cb" />
 
+Ara triem les carpetes d'origen i les exclusions. Tot seguit, indiquem on es guardarà la còpia. Ho farem localment, directament a l'escriptori, per comprovar-ne fàcilment el resultat.
+
+<img width="300" height="95" alt="image" src="https://github.com/user-attachments/assets/eccb70eb-a13c-404a-88c5-c9fc9cf51824" />
+
+A continuació, el sistema sol·licita una contrasenya per habilitar el xifratge de les dades. Introduïm la clau desitjada i continuem amb el procés.
+
+<img width="404" height="318" alt="image" src="https://github.com/user-attachments/assets/c71a56fd-588e-40fb-aae2-155960611801" />
+
+Observem com s'inicia el procés de creació de la còpia de seguretat.
+
+<img width="305" height="163" alt="image" src="https://github.com/user-attachments/assets/999412f1-4c7d-4677-bb50-f30408e2752d" />
+
+Confirmem que els arxius resultants de la còpia ja apareixen a l'escriptori.
+
+<img width="164" height="523" alt="image" src="https://github.com/user-attachments/assets/1627706a-61b2-4cfc-bc1f-f1801cf9ef62" />
+
+Aquesta aplicació permet programar còpies de seguretat periòdiques.
+
+<img width="763" height="410" alt="image" src="https://github.com/user-attachments/assets/b8df0f46-4333-4e05-bc0b-1781a3febdf1" />
+
+A més, permet restaurar fitxers i carpetes fàcilment." "Addicionalment, ofereix la funció de restauració de fitxers i directoris.
+
+<img width="769" height="444" alt="image" src="https://github.com/user-attachments/assets/1c3b26af-ef34-4fb6-a6a5-ab2eed570811" />
+
+### Automatització d'scripts
+
+#### Teoria
+
+##### Cron
+Executa tasques programades en una data i hores específiques.
+* **Limitació:** Si el sistema està apagat, la tasca es perd.
+* **Ús:** És ideal per a tasques en dates i hores concretes i per a accions específiques d’un usuari.
+
+##### Anacron
+És ideal per executar tasques periòdiques, on no cal una data i una hora específica.
+* **Avantatge:** No requereix que el sistema estigui engegat. Si l'ordinador estava apagat, la tasca s'executarà tan bon punt s'iniciï el sistema.
+* **Ús:** Normalment s’utilitza per a tasques de manteniment del sistema.
+
+#### Pràctica
+
+##### Cron
+**Hi ha** dos documents principals que podem editar per afegir tasques programades: el *crontab* d’usuari i el *crontab* del sistema.
+
+1. **Crontab del sistema** (`/etc/crontab`)
+   * Cal especificar **quin usuari** executa la comanda (per exemple, `root`).
+
+2. **Crontab d’usuari** (`crontab -e`)
+   * **No cal** especificar l'usuari, perquè s’executa automàticament amb els permisos de l'usuari que crea la tasca.
+
+<img width="879" height="403" alt="image" src="https://github.com/user-attachments/assets/d8321cb3-30cb-4d80-a2b1-5bc703214cbd" />
+
+Per editar el crontab d’un usuari **específic** (requereix permisos de *root*), executem:
+
+`crontab -u [usuari] -e`
+
+<img width="595" height="222" alt="image" src="https://github.com/user-attachments/assets/eda1db8e-6422-429c-a807-c2664ef382a2" />
+
+<img width="662" height="489" alt="image" src="https://github.com/user-attachments/assets/2c0feb4f-9011-4e4c-adc5-8e2e58d567f4" />
+
+### Anacron
+El fitxer de configuració principal és `/etc/anacrontab`.
+
+<img width="691" height="294" alt="image" src="https://github.com/user-attachments/assets/bc4d5109-3b05-42fb-867f-b90b271901c7" />
+
+Per demostrar la seva funcionalitat, generarem un script que comprimeixi el directori Imatges, on prèviament haurem afegit dos fitxers de prova.
+
+<img width="620" height="253" alt="image" src="https://github.com/user-attachments/assets/e0ff0631-0372-4203-bab7-3dea1531a48d" />
+
+Creem un fitxer anomenat copies.sh, on afegirem l'script desitjat. Hem configurat que el nom del fitxer resultant inclogui el timestamp (la data i hora) del moment de la creació.Creem un fitxer anomenat copies.sh, on afegirem l'script desitjat. Hem configurat que el nom del fitxer resultant inclogui el timestamp (la data i hora) del moment de la creació.
+
+<img width="722" height="156" alt="image" src="https://github.com/user-attachments/assets/7fef4911-6358-40b7-a87b-8ad6b4af7b82" />
+
+Ara donem permís d’execució al fitxer i veiem amb l'ordre ls -l que s'ha aplicat correctament.
+
+<img width="580" height="328" alt="image" src="https://github.com/user-attachments/assets/9dfc8367-8f98-40f0-a33c-ab81a659e4f2" />
+
+El que hem de fer ara és editar l’arxiu de crontab, tal com hem vist a l’apartat de Cron, i afegir a l’última línia la tasca que volem realitzar.
+
+<img width="725" height="400" alt="image" src="https://github.com/user-attachments/assets/89b764e6-e5ae-430f-87d7-46787a14b739" />
+
+Ara esperem fins a l’hora que hem programat i veiem que s'ha creat l'arxiu. Si l'obrim, hi trobarem els fitxers dels quals volíem fer la còpia.
+
+<img width="783" height="195" alt="image" src="https://github.com/user-attachments/assets/3336117a-5450-407d-874d-cd09d308667b" />
+
+<img width="601" height="202" alt="image" src="https://github.com/user-attachments/assets/65fb45aa-dbca-495b-8ac0-86364d44d288" />
+
+Finalment, per provar un altre mètode, farem que ens creï l'arxiu cada dia que iniciem la màquina. Això ho aconseguim gràcies al directori cron.daily (també existeixen altres directoris similars per fer-ho setmanalment o mensualment).
+
+<img width="389" height="236" alt="image" src="https://github.com/user-attachments/assets/3768cfad-f7cf-4901-b8af-60bb82cb65f6" />
+
+Per fer-ho, copiem l'script que hem creat a la ruta /etc/cron.daily/copies.
+
+<img width="641" height="384" alt="image" src="https://github.com/user-attachments/assets/020068cb-19ed-43f9-80c6-62849d50205a" />
+
+Com que la màquina ja s'ha iniciat avui, si reiniciem no es generarà el fitxer, ja que la tasca només s'executa un cop al dia. Per això, hem d'editar el fitxer de registre d'Anacron i esborrar-ne el contingut per forçar l'execució.
+
+<img width="641" height="384" alt="image" src="https://github.com/user-attachments/assets/d037736c-5188-4ca1-b60b-b18dce3b93fe" />
+
+Fem reboot i esperem un minut.
+
+<img width="647" height="144" alt="image" src="https://github.com/user-attachments/assets/0559ecd3-c9b3-484f-9f6a-95be9faf3993" />
+
+<img width="596" height="172" alt="image" src="https://github.com/user-attachments/assets/5890ba91-39e9-4285-9798-d635e9f50ff4" />
+
+Veem que ens ha creat correctament el fitxer.
 
 ## Quotes d'usuari
+
+### Quotes d'usuari (Disk Quotas)
+
+Les quotes d’usuari són un mecanisme que permet als administradors limitar la quantitat d’espai de disc o el nombre de fitxers que un usuari (o un grup) pot utilitzar.
+
+Hi ha dos tipus de recursos que es controlen amb les quotes:
+
+* **Límit de Blocs (Espai):** Limita la quantitat de dades (en KB, MB o GB).
+* **Límit d’Inodes (Fitxers):** Limita la quantitat de fitxers i directoris, independentment de la seva mida.
+
+#### Tipus de límits
+
+* **Soft Limit (Límit suau):** L’usuari pot superar aquest límit temporalment, però rebrà avisos indicant que s’està acostant al màxim. Si no redueix l’espai abans que passi el **període de gràcia** (habitualment 7 dies), el sistema li bloquejarà l’escriptura.
+* **Hard Limit (Límit dur):** L’usuari no pot superar mai aquest límit. Si intenta guardar un fitxer que el superi, rebrà l’error `Disk quota exceeded` immediatament i l’escriptura fallarà.
+
+### Pràctica
+
+**Instal·lació del paquet**
+Per començar, instal·lem l'eina de quotes:
+
+```bash
+sudo apt install quota
+
+<img width="532" height="27" alt="Captura de pantalla de 2025-12-21 08-17-59" src="https://github.com/user-attachments/assets/f3d56e7e-7e1e-40de-8d0f-b3cb522cba8d" />
+
+
+
+
