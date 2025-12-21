@@ -712,6 +712,126 @@ Per verificar el funcionament de les còpies, necessitem dades d'origen. Creem u
 
 <img width="566" height="98" alt="Captura de pantalla de 2025-12-18 13-25-24" src="https://github.com/user-attachments/assets/54dcac52-c3a2-4c6e-9645-b2fba7889f28" />
 
+### Configuració del Punt de Muntatge
+
+Per accedir al disc dur secundari, necessitem assignar-li una carpeta del sistema.
+
+1.  **Creació del directori:**
+    `mkdir /var/copies`
+
+2.  **Muntatge del dispositiu:**
+    Connectem la partició que hem formatat anteriorment (`sdb1`) a la nova carpeta:
+    `mount /dev/sdb1 /var/copies`
+
+    <img width="751" height="388" alt="image" src="https://github.com/user-attachments/assets/79ef9191-e654-4098-bd2a-4c52fe6d7042" />
+
+Ara ja podem veure les següents comandes.
+
+**Prova amb `cp -R`:**
+Vam realitzar una còpia inicial de la carpeta `Documents`. Per comprovar com s'actualitza, vam modificar l'origen (esborrant fitxers i creant-ne de nous) i vam tornar a llançar la comanda.
+
+**Resultat:**
+El directori de destinació `/var/copies` manté **tots els fitxers**, tant els nous com els que havíem esborrat a l'origen. Això demostra que `cp` simplement "bolca" les dades sense netejar el destí, cosa que pot generar duplicitats i brutícia digital.
+
+<img width="615" height="22" alt="image" src="https://github.com/user-attachments/assets/5335faf2-16d2-4304-9eed-0a596c65cd55" />
+
+<img width="634" height="151" alt="image" src="https://github.com/user-attachments/assets/f8e53510-1373-486e-9006-27770e54e564" />
+
+<img width="533" height="97" alt="image" src="https://github.com/user-attachments/assets/128e3efa-2ac0-4f51-84b4-5ef1a1088cde" />
+
+**Sincronització diferencial:**
+Utilitzant `rsync`, el sistema realitza una verificació prèvia (per data i mida). La gran diferència amb l'anterior és que **només transfereix les dades modificades**. Això fa que les segones còpies siguin gairebé instantànies, ja que s'evita reescriure la informació que ja tenim guardada.
+
+<img width="754" height="221" alt="image" src="https://github.com/user-attachments/assets/819286c6-a304-495e-9018-bbf151afa8e3" />
+
+<img width="820" height="367" alt="image" src="https://github.com/user-attachments/assets/e02d0aa3-d75a-4da4-8384-a0b2d4583b67" />
+
+**Clonatge de particions:**
+Finalment, utilitzem `dd` per volcar el contingut brut de `/dev/sdb1` sobre `/dev/sdc1`. A diferència de les eines anteriors, `dd` no entén de fitxers, sinó de blocs de dades.
+
+**Validació:**
+Per comprovar l'èxit de l'operació, hem utilitzat l'eina de hashing `md5sum`. En obtenir el mateix codi hash a l'origen i al destí, confirmem que no s'ha alterat ni un sol bit durant la transferència; tenim dues particions gemenes.
+
+<img width="818" height="468" alt="image" src="https://github.com/user-attachments/assets/b209bfce-b15c-4009-9b45-5ca5516c8c4c" />
+
+### Gestió de Backups amb Duplicity
+
+Duplicity és una eina que destaca per generar còpies de seguretat **xifrades** i **incrementals**.
+
+* **Xifratge GPG:** Garanteix la privacitat total. Ningú pot llegir el contingut del backup sense la contrasenya de desxifratge.
+* **Estalvi d'espai:** Gràcies a l'algoritme `rsync`, detecta les parts modificades dels fitxers i només guarda els canvis (deltas), optimitzant el disc.
+
+**Configuració prèvia:**
+Abans d'instal·lar l'eina, hem preparat el disc de destí:
+1. Formatat de la partició de 1GB: `mkfs.ext4 /dev/sdc1`.
+2. Creació del directori destí: `mkdir /backup`.
+3. Muntatge de la unitat per fer-la accessible.
+
+<img width="746" height="290" alt="image" src="https://github.com/user-attachments/assets/21f85d21-d187-4bb6-a1c0-f886df617fb4" />
+
+**Configuració d'arrencada (fstab):**
+Per assegurar que la unitat de còpies es munti automàticament cada vegada que encenem l'ordinador, cal registrar-la al fitxer `/etc/fstab`.
+Simplement afegim la ruta de la partició, el punt de muntatge `/backup` i el sistema de fitxers `ext4` al final del fitxer.
+
+<img width="752" height="440" alt="image" src="https://github.com/user-attachments/assets/57d2c247-8aea-4744-9475-24315e7fc561" />
+
+Ara si, instal·lem duplicity
+
+<img width="470" height="24" alt="image" src="https://github.com/user-attachments/assets/ac62dd9f-0370-434e-8015-03ebc5f8679c" />
+
+Ara ja podem fer la còpia, que la farem de la carpeta Documentos i li ficarem destinació al escriptori.
+
+<img width="359" height="62" alt="image" src="https://github.com/user-attachments/assets/ea149894-094e-40b0-a9e7-e025ee1487dd" />
+
+**Gestió de la contrasenya**
+Per evitar haver d'escriure la clau de xifratge manualment cada vegada (cosa impossible en tasques automàtiques), la desarem temporalment a la memòria del sistema.
+
+Utilitzant la comanda `export PASSPHRASE='...'`, Duplicity agafarà aquest valor automàticament. Això és imprescindible per poder programar les còpies posteriors.
+
+<img width="553" height="21" alt="image" src="https://github.com/user-attachments/assets/4d7c19de-444c-4005-9813-3fdffec5f390" />
+
+**Execució estàndard:**
+En cas de no voler automatitzar el procés, podem executar l'eina manualment seguint l'esquema `duplicity [origen] [destí]`.
+Cal recordar que el destí ha d'incloure el protocol (per exemple `file://` per a discs locals). En fer-ho d'aquesta manera, serà imprescindible ser davant l'ordinador per introduir la contrasenya de xifratge cada vegada que es faci una còpia.
+
+<img width="727" height="436" alt="image" src="https://github.com/user-attachments/assets/bf573a11-ddc6-4a44-8825-b31f1f791712" />
+
+**Comprovació de la còpia:**
+En accedir a la carpeta `/backup`, observem que s'han generat diversos fitxers comprimits. A diferència del `cp` o `rsync`, aquí no veiem l'estructura de carpetes original, ja que Duplicity ha empaquetat i xifrat tota la informació per seguretat. La presència d'aquests fitxers confirma que el procés s'ha completat amb èxit.
+
+<img width="489" height="99" alt="image" src="https://github.com/user-attachments/assets/0e12a814-027d-448e-ad1e-107151666c23" />
+
+**Operació de Restauració:**
+Per recuperar la informació, utilitzem la comanda `restore`.
+* **Total:** Simplement invertim l'ordre d'origen i destí.
+* **Parcial:** Amb l'opció `--file-to-restore`, podem extreure un document concret. A més, amb el paràmetre `--time`, podem especificar si volem la versió d'avui, la d'ahir o la de fa una setmana.
+
+**Connectivitat (Protocols):**
+Duplicity és compatible amb la majoria d'estàndards de xarxa. Només cal canviar el prefix de la URL per enviar les dades on vulguem:
+* `file://` per a discs locals.
+* `scp://` o `sftp://` per a servidors remots via SSH.
+* `s3://`, `gdocs://`, etc. per a serveis al núvol com AWS o Google Drive.
+
+### Déjà Dup
+En realitat, Déjà Dup no és un programa nou, sinó una "capa visual" (GUI) per a Duplicity.
+Ens permet gaudir de la seguretat del xifratge i l'eficiència de la còpia incremental sense haver d'escriure ni una sola línia de codi.
+
+**Característiques clau:**
+1.  **Automatització total:** S'encarrega d'escriure les comandes complexes per nosaltres.
+2.  **Anacron:** Gestiona els horaris de manera intel·ligent (si l'ordinador estava apagat, fa la còpia en encendre'l).
+3.  **Simplicitat:** Redueix tot el procés a dos botons grans: "Restaurar" i "Fer còpia ara".
+
+**Instal·lació:**
+Per afegir l'eina al sistema, executem:
+`sudo apt install deja-dup`
+
+<img width="491" height="21" alt="image" src="https://github.com/user-attachments/assets/0320dbd8-1305-4df2-84de-7adec1c0793b" />
+
+**Accés a l'eina:**
+En finalitzar la instal·lació, veurem que el programa no apareix al menú d'aplicacions com a "Déjà Dup". Això és perquè GNOME prioritza els noms funcionals sobre les marques comercials. En el nostre cas, haurem d'obrir el cercador d'aplicacions i escriure **"Respaldos"** (o "Còpies de seguretat" si tenim el sistema en català) per accedir al tauler de control.
+
+<img width="770" height="445" alt="image" src="https://github.com/user-attachments/assets/1d4ec228-fd74-4362-a22e-7919e48be425" />
+
 
 
 
