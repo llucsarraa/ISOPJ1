@@ -999,7 +999,7 @@ Aplicant la teoria dels límits descrita anteriorment, procedirem a restringir l
 
 Validació del funcionament "Per verificar que les restriccions s'apliquen correctament, generarem un fitxer de prova de 800 KiB mitjançant l'ordre dd. En consultar l'estat de la quota, observarem que el sistema comptabilitza l'espai ocupat (800 blocs) sense emetre cap alerta, ja que ens mantenim per sota del llindar suau (Soft Limit)."
 
-<img width="929" height="632" alt="image" src="https://github.com/user-attachments/assets/2ac86264-9305-4aac-b776-b852165c6a41" />
+<img width="845" height="568" alt="image" src="https://github.com/user-attachments/assets/9ddb340b-83a8-4439-86b6-18ff53d541fa" />
 
 En generar un segon fitxer de característiques idèntiques, l'ús de disc ascendeix als 1600 blocs. Com que aquesta xifra excedeix el Soft Limit (fixat en 1024), el sistema activa automàticament l'estat d'alerta i ens notifica que hem entrat en el període de gràcia (grace period), indicant-nos els dies restants per regularitzar la situació.
 
