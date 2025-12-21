@@ -1011,6 +1011,9 @@ En intentar repetir el procediment per tercera vegada, el sistema bloqueja defin
 
 <img width="641" height="216" alt="image" src="https://github.com/user-attachments/assets/f66df54b-e646-4cad-96e2-e0868ee47726" />
 
+Per confirmar que el bloqueig era efectivament producte de les polítiques aplicades, procedim a desactivar les quotes (mitjançant quotaoff). Immediatament després, verifiquem que el sistema torna a permetre la creació del fitxer sense cap impediment.
+
+
 
 
 
