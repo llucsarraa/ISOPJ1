@@ -1013,8 +1013,8 @@ En intentar repetir el procediment per tercera vegada, el sistema bloqueja defin
 
 Per confirmar que el bloqueig era efectivament producte de les polítiques aplicades, procedim a desactivar les quotes (mitjançant quotaoff). Immediatament després, verifiquem que el sistema torna a permetre la creació del fitxer sense cap impediment.
 
+<img width="682" height="175" alt="image" src="https://github.com/user-attachments/assets/b649b154-1e60-4ebc-a47a-cc5ede96cf94" />
 
+Finalment, per ajustar el període de gràcia, utilitzarem l'ordre edquota -t. Cal tenir en compte que aquesta configuració no és individual, sinó que s'aplica de manera global a tots els usuaris del sistema de fitxers, permetent-nos definir quant de temps tenen per alliberar espai abans del bloqueig.
 
-
-
-
+<img width="799" height="147" alt="image" src="https://github.com/user-attachments/assets/4439ee15-f50f-4445-8208-9eb14c366397" />
