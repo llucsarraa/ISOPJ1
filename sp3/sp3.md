@@ -243,12 +243,21 @@ Durant la prova amb l'usuari no autoritzat, hem observat que el sistema no retor
 
 <img width="462" height="432" alt="2026-01-29_13-21_1" src="https://github.com/user-attachments/assets/3d620b51-c818-46fd-a42d-293469259c22" />
 
+## Extra
 
 
 
+# Servidor NFS
 
+A nivell servidor
 
+# Exercici LDAP
 
+L'administració del directori es realitzarà mitjançant un entorn gràfic especialitzat. Entre les opcions disponibles, farem servir Apache Directory Studio, una eina basada en Eclipse que ens permetrà gestionar els objectes, atributs i esquemes de l'LDAP d'una manera més visual i intuïtiva.
+
+## Instal·lació ADS
+
+Com a requisit previ per a l'execució de l'Apache Directory Studio, és necessari instal·lar l'entorn de l'JRE (Java Runtime Environment) al sistema. Sense aquesta dependència, l'eina d'administració no podria iniciar-se correctament.
 
 
 
