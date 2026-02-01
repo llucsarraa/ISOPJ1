@@ -249,7 +249,7 @@ Durant la prova amb l'usuari no autoritzat, hem observat que el sistema no retor
 
 # Servidor NFS
 
-A nivell servidor
+Totes les configuracions i instal·lacions descrites a continuació es duran a terme a nivell de servidor. És primordial que la màquina central disposi de l'entorn Java per poder executar les eines de gestió del directori.
 
 # Exercici LDAP
 
