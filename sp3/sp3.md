@@ -245,6 +245,16 @@ Durant la prova amb l'usuari no autoritzat, hem observat que el sistema no retor
 
 ## Extra
 
+Iniciem la integració de LDAP creant un recurs compartit de zero. Configurem un nou directori al sistema i assignem els permisos d'usuari i grup necessaris per garantir una base neta abans de la vinculació.
+
+<img width="700" height="391" alt="2026-02-09_09-39" src="https://github.com/user-attachments/assets/437808f8-9294-40d6-833a-a3658611a106" />
+
+Preparem un fitxer .ldif per definir l'estructura de dades a LDAP. Hi especifiquem la creació d'un nou grup i els seus usuaris associats, seguint l'esquema d'atributs necessari per a la integració amb Samba.
+
+<img width="407" height="660" alt="image" src="https://github.com/user-attachments/assets/3f683b8d-e4c0-4c31-91a9-86ecf0423cac" />
+
+Executem la comanda ldapadd per carregar les definicions del fitxer LDIF al servidor. Amb això, l'estructura de grups i usuaris queda integrada i operativa dins del directori LDAP.
+
 
 
 # Servidor NFS
