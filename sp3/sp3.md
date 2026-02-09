@@ -255,6 +255,38 @@ Preparem un fitxer .ldif per definir l'estructura de dades a LDAP. Hi especifiqu
 
 Executem la comanda ldapadd per carregar les definicions del fitxer LDIF al servidor. Amb això, l'estructura de grups i usuaris queda integrada i operativa dins del directori LDAP.
 
+<img width="1005" height="279" alt="image" src="https://github.com/user-attachments/assets/33b64bce-4508-45d0-98d6-92df747de3ac" />
+
+Modifiquem el fitxer smb.conf per establir el backend de passatges a ldapsam. Afegim els paràmetres de connexió al directori i definim el nou recurs compartit, permetent que Samba sincronitzi les contrasenyes i gestioni els accessos mitjançant l'esquema de LDAP.
+
+<img width="729" height="238" alt="image" src="https://github.com/user-attachments/assets/9959c1b9-af3b-404c-aa43-e582a52ebbfc" />
+
+<img width="316" height="233" alt="image" src="https://github.com/user-attachments/assets/30b67cab-523c-450d-b8de-db14c8581e14" />
+
+Afegim l'esquema de Samba al servidor LDAP. Aquest pas és imprescindible perquè el directori entengui i accepti els nous camps de dades que Samba necessita per gestionar els usuaris i les seves contrasenyes.
+
+<img width="1168" height="41" alt="image" src="https://github.com/user-attachments/assets/25db6af9-605f-4944-a821-a08748734338" />
+
+Reiniciem el slapd (LDAP) i smbd (Samba) per aplicar els canvis en la configuració i carregar el nou esquema. Aquest pas assegura que ambdós serveis sincronitzin correctament la base de dades d'usuaris actualitzada
+
+<img width="605" height="39" alt="image" src="https://github.com/user-attachments/assets/a85fc2fe-e2fc-4429-91b0-c284e233b7fa" />
+
+Utilitzem la comanda smbpasswd -w per emmagatzemar la contrasenya de l'administrador de LDAP dins de la base de dades secreta de Samba. Això permet que el servei smbd tingui els permisos necessaris per realitzar canvis i consultes al directori slapd
+
+<img width="646" height="38" alt="image" src="https://github.com/user-attachments/assets/379d5d31-bb8a-4ea3-8c54-a3da4eaf9cc6" />
+
+Ara ja podrem afegir les contrasenyes als usuaris.
+
+<img width="607" height="239" alt="image" src="https://github.com/user-attachments/assets/c84f0d36-5a48-44e3-9252-c8dedb5255f3" />
+
+Passem a la fase de proves des del client. Verifiquem que el nou recurs és visible i que podem iniciar sessió amb els usuaris i contrasenyes que hem configurat prèviament al directori.
+
+### Prova client
+
+#### Anònim
+
+Malgrat no visualitzar errors de sintaxi, la connexió falla en l'intent de validació. Això és degut al fet que el fitxer smb.conf no té habilitat l'accés per a convidats o usuaris anònims, obligant el sistema a rebutjar qualsevol intent de connexió que no estigui explícitament autenticat.
+
 
 
 # Servidor NFS
