@@ -287,7 +287,33 @@ Passem a la fase de proves des del client. Verifiquem que el nou recurs és visi
 
 Malgrat no visualitzar errors de sintaxi, la connexió falla en l'intent de validació. Això és degut al fet que el fitxer smb.conf no té habilitat l'accés per a convidats o usuaris anònims, obligant el sistema a rebutjar qualsevol intent de connexió que no estigui explícitament autenticat.
 
+<img width="529" height="475" alt="image" src="https://github.com/user-attachments/assets/a6c1a303-0845-491a-9459-34e0e85c6313" />
 
+#### Eros
+
+L'usuari Eros aconsegueix autenticar-se correctament, però l'accés està limitat a mode lectura. Això indica que, tot i que l'autenticació amb LDAP funciona, el recurs compartit a smb.conf o els permisos del sistema de fitxers no tenen habilitada l'opció write list o els permisos d'escriptura per a aquest usuari.
+
+<img width="506" height="432" alt="image" src="https://github.com/user-attachments/assets/2f036c5c-b619-4663-9c25-3a6cd135fe23" />
+
+<img width="575" height="192" alt="image" src="https://github.com/user-attachments/assets/3ce483cb-df4c-4dc8-b794-faff2ff31cc2" />
+
+Comprovem que l'usuari Eros no pot eliminar el directori de Ian. Això confirma que els permisos de sistema (filesystem permissions) estan correctament configurats, impedint que un usuari amb permisos d'escriptura pugui interferir o esborrar la propietat d'altres membres del grup.
+
+<img width="510" height="182" alt="image" src="https://github.com/user-attachments/assets/b47cbbca-d93c-495d-acc6-3832618b6f2c" />
+
+#### Ian
+
+Validem l'accés amb l'usuari Ian, confirmant que disposa de permisos de lectura, escriptura i execució (rwx). A diferència d'altres perfils, aquest usuari pot gestionar el cicle de vida complet dels seus fitxers i carpetes dins del recurs compartit.
+
+<img width="502" height="426" alt="image" src="https://github.com/user-attachments/assets/fbb4f8d7-8895-430e-9060-b72ca5f21825" />
+
+<img width="247" height="167" alt="image" src="https://github.com/user-attachments/assets/bab37962-d0ac-4b16-91bd-8bd8be310904" />
+
+#### Razvan
+
+L'usuari Razvan no pot accedir al recurs a causa de les restriccions imposades a la configuració de Samba. Tot i estar al directori LDAP, la manca de permisos explícits al fitxer smb.conf provoca que el servidor el tracti com un usuari no autoritzat, igual que passa amb les connexions anònimes."
+
+<img width="503" height="436" alt="image" src="https://github.com/user-attachments/assets/94e1414c-543c-4981-ae2b-d62e6b64a621" />
 
 # Servidor NFS
 
