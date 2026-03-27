@@ -136,7 +136,4 @@ Ara que l'hem afegit, podem veure que ja està actiu.
 
 <img width="717" height="512" alt="2026-03-26_13-45" src="https://github.com/user-attachments/assets/913eb3d1-3332-44af-8b6d-f02133fd0bf8" />
 
-Ara si tornem a entrar al directori que hem fet de /raid1, veem que segueix los directoris i fitxers que hem afegit abans quan només teniem 1 disc.
-
-<img width="568" height="209" alt="image" src="https://github.com/user-attachments/assets/614fcdc3-23e0-406d-b433-7a831ef16cb9" />
 
