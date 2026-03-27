@@ -143,49 +143,93 @@ Podem comprovar que s'han generat diversos fitxers dins del directori remote. En
 
 <img width="287" height="66" alt="image" src="https://github.com/user-attachments/assets/535f1f6f-6409-4251-9c39-b85d2d36041d" />
 
+Si accedim al directori que s'acaba de crear, podrem localitzar el fitxer de registre i, un cop el comprovem, visualitzarem el log de prova que hem enviat anteriorment des del client.
+
 <img width="1215" height="535" alt="image" src="https://github.com/user-attachments/assets/02807902-269b-4fd7-98cb-8bd8fd085885" />
-
-
-
 
 # Servidor d'actualitzacions
 
+Implementar un servidor d'actualitzacions centralitzat en un entorn amb múltiples nodes Ubuntu és fonamental per garantir l'eficiència operativa:
+
+Optimització de l'ample de banda: Les actualitzacions es descarreguen un sol cop des de la xarxa externa. Els 50 equips de la infraestructura les obtenen directament del servidor local, reduint dràsticament el trànsit d'Internet.
+
+Gestió del cicle de vida i control de riscos: Permet establir un entorn de proves amb equips "pilot" per validar els pedaços abans del desplegament massiu, minimitzant l'impacte d'actualitzacions inestables.
+
+Monitoratge centralitzat de la seguretat: Facilita la supervisió de l'estat de cada node, identificant quins equips requereixen accions urgents o reinicis pendents.
+
+Suport per a entorns aïllats: És la solució indispensable per mantenir al dia servidors crítics que no disposen de sortida directa a Internet per motius de seguretat.
+
 ## Servidor
 
+Instalem apache i apt-mirror al servidor.
+
+<img width="517" height="17" alt="2026-03-12_13-08" src="https://github.com/user-attachments/assets/0cdd446f-291e-4b02-a6a0-7c3ba2e039b4" />
+
+<img width="525" height="22" alt="2026-03-12_13-09" src="https://github.com/user-attachments/assets/6bce5ff9-b748-4d01-adc5-3bc2d89f3200" />
+
+Accedirem al fitxer mirror.list i comentarem totes les línies per defecte per evitar descarregues innecessàries. A continuació, hi afegirem exclusivament el repositori o el paquet específic que volem instal·lar i mantenir sincronitzat.
+
+<img width="872" height="481" alt="2026-03-12_13-12" src="https://github.com/user-attachments/assets/1168ceec-56cf-4a8b-b994-47bd6d0a30fb" />
+
+Un cop configurat el fitxer, executarem la comanda apt-mirror per començar a descarregar i sincronitzar el repositori del paquet que hem definit prèviament.
+
+<img width="1015" height="648" alt="2026-03-12_13-13_1" src="https://github.com/user-attachments/assets/d204a29b-75eb-40b0-b9c1-b058816309df" />
+
+Un cop finalitzada la descàrrega, comprovarem que s'ha instal·lat correctament i enllaçarem el contingut a l'Apache per fer-lo accessible a través de la xarxa.
+
+<img width="881" height="98" alt="2026-03-12_13-16" src="https://github.com/user-attachments/assets/f33d0024-88e1-4bed-8bfa-b35829e01630" />
 
 ## Client
 
-## Exercici
+A la màquina client, accedirem al fitxer sources.list per afegir-hi el nou repositori. En lloc d'apuntar als servidors oficials d'Ubuntu, utilitzarem l'adreça de l'enllaç simbòlic que hem creat prèviament al servidor local.
 
+<img width="747" height="446" alt="2026-03-12_13-19" src="https://github.com/user-attachments/assets/378d2947-5294-4a8c-bac9-462a87c57cb9" />
+
+Aquest pas és indispensable abans d'instal·lar el paquet, ja que primer cal signar-lo (o importar-ne la clau de signatura) perquè el sistema el reconegui com a font de confiança.
+
+<img width="1055" height="76" alt="2026-03-12_13-22" src="https://github.com/user-attachments/assets/df1d0af8-1aaf-41c3-984e-56cb20a4c471" />
+
+Ara, en executar un apt update al client, podrem observar com el sistema agafarà un dels repositoris directament de la màquina servidor en lloc de buscar-lo a Internet.
+
+<img width="1205" height="283" alt="2026-03-12_13-26" src="https://github.com/user-attachments/assets/e83baf97-3ca5-4bf2-b737-9d1cdcf63c89" />
+
+Un cop verificat el repositori, procedirem a instal·lar el paquet desitjat; podrem comprovar que la descàrrega es realitza directament des del nostre servidor local.
+
+<img width="1208" height="520" alt="2026-03-12_13-29" src="https://github.com/user-attachments/assets/67287764-6f98-412f-948e-5a6783ef1dea" />
+
+## Exercici
 ### Servidor
 
+He triat l'aplicació AnyDesk perquè és una de les que consumeix menys recursos, la qual cosa en facilita una instal·lació ràpida. A continuació, procedirem a afegir el seu repositori al servidor.
+
+<img width="771" height="419" alt="2026-03-12_13-57" src="https://github.com/user-attachments/assets/0d392833-4682-4682-8cad-fcdb49a8f96d" />
+
+Fem un apt-mirror i veem que descarrega ja el paquet.
+
+<img width="1202" height="719" alt="2026-03-12_14-00" src="https://github.com/user-attachments/assets/eeb24ad7-4b5b-4d8d-bfd5-8e3400a85b10" />
+
+Enviem el paquet a apache.
+
+<img width="753" height="76" alt="2026-03-12_14-06" src="https://github.com/user-attachments/assets/8e172d06-c1bf-43c1-9b72-73689081ec01" />
 
 ### Client
 
+A la màquina client, accedirem al fitxer sources.list per afegir-hi el nou repositori. En lloc d'apuntar als servidors oficials, utilitzarem l'adreça de l'enllaç simbòlic que hem creat prèviament al servidor local.
 
+<img width="807" height="492" alt="2026-03-12_14-11" src="https://github.com/user-attachments/assets/5fc6109e-1087-4fb0-b137-1d0ea8dab38f" />
 
+Aquest pas és indispensable abans d'instal·lar el paquet, ja que primer cal signar el repositori (o importar-ne la clau de confiança) perquè el sistema en validi l'autenticitat.
 
+<img width="800" height="89" alt="2026-03-12_14-17" src="https://github.com/user-attachments/assets/cad604b4-673b-4436-8fa8-e76544e810d7" />
 
+Ara, en executar un apt update, veiem que el client s'ha connectat correctament al servidor local per agafar la llista de paquets del repositori que hem configurat.
 
+<img width="807" height="338" alt="2026-03-12_14-18" src="https://github.com/user-attachments/assets/a6b29a41-41a6-4789-943d-fe5cb92212c6" />
 
+Finalment, ja podem procedir a instal·lar el paquet i confirmar que el sistema el descarrega directament des del nostre servidor local.
 
+<img width="923" height="507" alt="2026-03-12_14-19" src="https://github.com/user-attachments/assets/882b9f43-3e7e-4143-87a5-92ca7b294f60" />
 
+Un cop finalitzada la instal·lació, l'aplicació ja està operativa i ja la podem fer servir amb total normalitat a la màquina client.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<img width="644" height="240" alt="image" src="https://github.com/user-attachments/assets/0e572098-4a87-4909-bb34-64485ba8ef11" />
